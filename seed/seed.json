@@ -1,0 +1,4582 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "Masthead",
+		"description": "A newspaper-style news magazine with sections, many authors",
+		"author": "Ondelva"
+	},
+	"settings": {
+		"title": "The Alden Ledger",
+		"tagline": "News from Port Alden and the east bay"
+	},
+	"collections": [
+		{
+			"slug": "posts",
+			"label": "Articles",
+			"labelSingular": "Article",
+			"supports": [
+				"drafts",
+				"revisions",
+				"search",
+				"seo"
+			],
+			"commentsEnabled": false,
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "kicker",
+					"label": "Kicker",
+					"type": "string"
+				},
+				{
+					"slug": "dek",
+					"label": "Dek",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "excerpt",
+					"label": "Excerpt",
+					"type": "text"
+				},
+				{
+					"slug": "dateline",
+					"label": "Dateline",
+					"type": "string"
+				},
+				{
+					"slug": "featured_image",
+					"label": "Featured image",
+					"type": "image"
+				},
+				{
+					"slug": "featured_image_caption",
+					"label": "Image caption",
+					"type": "string"
+				},
+				{
+					"slug": "featured_image_credit",
+					"label": "Image credit",
+					"type": "string"
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "correction",
+					"label": "Correction or editor's note",
+					"type": "text"
+				},
+				{
+					"slug": "placement",
+					"label": "Home page placement",
+					"type": "select",
+					"indexed": true,
+					"defaultValue": "standard",
+					"validation": {
+						"options": [
+							"lead",
+							"top",
+							"standard"
+						]
+					}
+				}
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		}
+	],
+	"taxonomies": [
+		{
+			"name": "category",
+			"label": "Sections",
+			"labelSingular": "Section",
+			"hierarchical": true,
+			"collections": [
+				"posts"
+			],
+			"terms": [
+				{
+					"slug": "news",
+					"label": "News"
+				},
+				{
+					"slug": "city",
+					"label": "City"
+				},
+				{
+					"slug": "business",
+					"label": "Business"
+				},
+				{
+					"slug": "culture",
+					"label": "Culture"
+				},
+				{
+					"slug": "opinion",
+					"label": "Opinion"
+				},
+				{
+					"slug": "science",
+					"label": "Science"
+				}
+			]
+		},
+		{
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": [
+				"posts"
+			],
+			"terms": [
+				{
+					"slug": "city-council",
+					"label": "City Council"
+				},
+				{
+					"slug": "budget",
+					"label": "Budget"
+				},
+				{
+					"slug": "harbor",
+					"label": "Harbor"
+				},
+				{
+					"slug": "transit",
+					"label": "Transit"
+				},
+				{
+					"slug": "schools",
+					"label": "Schools"
+				},
+				{
+					"slug": "small-business",
+					"label": "Small Business"
+				},
+				{
+					"slug": "port",
+					"label": "Port"
+				},
+				{
+					"slug": "arts",
+					"label": "Arts"
+				},
+				{
+					"slug": "libraries",
+					"label": "Libraries"
+				},
+				{
+					"slug": "wildlife",
+					"label": "Wildlife"
+				}
+			]
+		}
+	],
+	"bylines": [
+		{
+			"id": "byline-mara",
+			"slug": "mara-okafor",
+			"displayName": "Mara Okafor",
+			"bio": "Mara Okafor covers City Hall and the harbor for the Ledger. She has sat through every council budget session since 2019."
+		},
+		{
+			"id": "byline-daniel",
+			"slug": "daniel-reyes",
+			"displayName": "Daniel Reyes",
+			"bio": "Daniel Reyes is the Ledger's business editor. He writes about the port, rents, and the shops on Front Street."
+		},
+		{
+			"id": "byline-ines",
+			"slug": "ines-lindqvist",
+			"displayName": "Ines Lindqvist",
+			"bio": "Ines Lindqvist reports on science and the environment, mostly the water. She trained as a marine biologist before joining the paper."
+		},
+		{
+			"id": "byline-tom",
+			"slug": "tom-achterberg",
+			"displayName": "Tom Achterberg",
+			"bio": "Tom Achterberg is the Ledger's culture critic. He reviews film, theater, and the occasional brass band."
+		},
+		{
+			"id": "byline-priya",
+			"slug": "priya-natarajan",
+			"displayName": "Priya Natarajan",
+			"bio": "Priya Natarajan covers schools and the east side neighborhoods."
+		},
+		{
+			"id": "byline-board",
+			"slug": "editorial-board",
+			"displayName": "The Editorial Board",
+			"bio": "Editorials represent the view of the Ledger's editorial board, which is separate from the newsroom."
+		},
+		{
+			"id": "byline-ruth",
+			"slug": "ruth-adeyemi",
+			"displayName": "Ruth Adeyemi",
+			"bio": "Ruth Adeyemi is a retired schoolteacher and a volunteer at the Port Alden Public Library.",
+			"isGuest": true
+		}
+	],
+	"menus": [
+		{
+			"name": "primary",
+			"label": "Primary navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Home",
+					"url": "/"
+				},
+				{
+					"type": "page",
+					"label": "About",
+					"ref": "about"
+				},
+				{
+					"type": "custom",
+					"label": "Search",
+					"url": "/search"
+				}
+			]
+		},
+		{
+			"name": "sections",
+			"label": "Sections (header strip and home page order)",
+			"items": [
+				{
+					"type": "custom",
+					"label": "News",
+					"url": "/category/news"
+				},
+				{
+					"type": "custom",
+					"label": "City",
+					"url": "/category/city"
+				},
+				{
+					"type": "custom",
+					"label": "Business",
+					"url": "/category/business"
+				},
+				{
+					"type": "custom",
+					"label": "Culture",
+					"url": "/category/culture"
+				},
+				{
+					"type": "custom",
+					"label": "Opinion",
+					"url": "/category/opinion"
+				},
+				{
+					"type": "custom",
+					"label": "Science",
+					"url": "/category/science"
+				}
+			]
+		},
+		{
+			"name": "footer",
+			"label": "Footer",
+			"items": [
+				{
+					"type": "page",
+					"label": "About the Ledger",
+					"ref": "about"
+				},
+				{
+					"type": "page",
+					"label": "Corrections policy",
+					"ref": "corrections"
+				},
+				{
+					"type": "custom",
+					"label": "RSS",
+					"url": "/rss.xml"
+				}
+			]
+		},
+		{
+			"name": "social",
+			"label": "Social links",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Mastodon",
+					"url": "https://mastodon.social/"
+				},
+				{
+					"type": "custom",
+					"label": "Bluesky",
+					"url": "https://bsky.app/"
+				}
+			]
+		}
+	],
+	"sections": [
+		{
+			"slug": "newsletter-signup",
+			"title": "Newsletter signup",
+			"description": "A short invitation to the morning newsletter",
+			"keywords": [
+				"newsletter",
+				"subscribe",
+				"email"
+			],
+			"source": "theme",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "k0",
+					"style": "h3",
+					"children": [
+						{
+							"_type": "span",
+							"_key": "k1",
+							"text": "The morning edition, by email"
+						}
+					]
+				},
+				{
+					"_type": "block",
+					"_key": "k2",
+					"style": "normal",
+					"children": [
+						{
+							"_type": "span",
+							"_key": "k3",
+							"text": "Five stories from Port Alden, in your inbox at 6 a.m. on weekdays. Written by the same people who report them."
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "editors-note",
+			"title": "Editor's note",
+			"description": "A short note from the editors placed above or below an article",
+			"keywords": [
+				"editor",
+				"note",
+				"update"
+			],
+			"source": "theme",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "k0",
+					"style": "blockquote",
+					"children": [
+						{
+							"_type": "span",
+							"_key": "k1",
+							"text": "Editor's note: ",
+							"marks": [
+								"strong"
+							]
+						},
+						{
+							"_type": "span",
+							"_key": "k2",
+							"text": "Say what changed, when, and why."
+						}
+					]
+				}
+			]
+		}
+	],
+	"content": {
+		"pages": [
+			{
+				"id": "about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About the Ledger",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Alden Ledger was founded in 1962 by a group of Port Alden dockworkers and a printer who thought the city needed a paper that covered the harbor as closely as it covered City Hall. It has been printed continuously since, and it has been independent since a 1978 buyout kept it out of the hands of the regional chain that owns most papers on this coast.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The newsroom has fourteen full-time reporters and editors, split across City Hall, the harbor and port, business, science and the environment, culture, and the podcast desk. We do not have a wire service subscription; if it is not in this paper, one of our own reporters wrote it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The Ledger is owned by a nonprofit trust set up by the original staff in 1978. The trust has one rule: no single owner, family, or company can hold a controlling stake. Ad revenue and reader subscriptions fund the newsroom; neither the city nor the port authority buys advertising here.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "We correct our mistakes in print and online, and we say so plainly. The corrections policy is on this site. If you think we got something wrong, write to the editor named on the story.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "Most of the paper is free to read. Some reporting, mainly the long investigative pieces, is for subscribers only, because it takes weeks or months of a reporter's time to produce and someone has to pay for that time. A subscription costs less than a cup of coffee a week.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				}
+			},
+			{
+				"id": "corrections",
+				"slug": "corrections",
+				"status": "published",
+				"data": {
+					"title": "Corrections policy",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Alden Ledger corrects its mistakes. If we get a fact wrong, we fix it and we say what changed.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "When an error is caught before an article is widely shared, we correct it quietly and note the change in the article's edit history. When an error has already reached readers, in print or online, we add a correction note at the bottom of the article that states what was wrong and what the right information is.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "We do not delete or unpublish articles to fix errors, except in rare cases involving a minor's name or a legal or safety concern, and those decisions are made by the editor in chief.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "A correction is different from an update. An update adds new information as a story develops, such as a final vote count once a meeting ends. A correction fixes something that was wrong when it was published, such as a misquote or a wrong figure.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "To flag a possible error, write to the reporter or editor whose name is on the story, or to the editor in chief at the address on our contact page. Include the article's headline and the specific fact in question. We read every message and reply to most within a few days.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				}
+			}
+		],
+		"posts": [
+			{
+				"id": "post-feature-tides",
+				"slug": "eighty-years-of-tide-records",
+				"status": "published",
+				"data": {
+					"title": "What eighty years of tide records say about Port Alden's next storm",
+					"kicker": "The long read",
+					"dek": "A gauge on the North Pier has measured the sea every six minutes since 1941. Three people read the whole record this year. Here is what it shows, and what it doesn't.",
+					"excerpt": "The sea at North Pier is 17 centimeters higher than in 1941, and flood hours have gone from four a year to 58.",
+					"dateline": "PORT ALDEN",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/north-pier-gulls.jpg",
+							"alt": "Gulls and cormorants crowding the water beside a pier",
+							"filename": "north-pier-gulls.jpg"
+						}
+					},
+					"featured_image_caption": "The North Pier, where the tide gauge has stood on the last piling since 1968.",
+					"featured_image_credit": "John Robert McPherson / Wikimedia Commons (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The tide gauge at the end of the North Pier has been writing down the height of the sea every six minutes since 1941. For most of those years nobody looked at the numbers unless a storm was coming. This summer, three people did: a retired harbor pilot, a graduate student at the state university, and an engineer at the Public Works department who had been asked to explain why the seawall budget kept growing.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "What they found is not a mystery, and it is not a catastrophe. It is a slow line that bends upward, and a set of days each winter when that line meets the wind. The city is now planning for the next forty years around those days. This is what the records show, what they do not, and what the people reading them think the city should do next.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The long line",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "The first thing anyone does with eighty years of tide data is average it. Take every six-minute reading from a year, add them up, divide, and you get that year's mean sea level. Plot eighty of those points and you get a line.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "At North Pier the line rose about 17 centimeters between 1941 and last year. For the first forty years it climbed a little under 1.5 millimeters a year. Since about 1990 the rate has been closer to 3.4 millimeters, and the last decade has been steeper still.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "\"People hear 17 centimeters and think, that's the width of my hand, who cares,\" said Walt Brenner, who piloted ships into the harbor for thirty-one years before retiring in 2019. \"But the sea doesn't come up evenly. It comes up on the worst day, on top of everything else.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "Brenner started keeping his own notebook of high-water marks in 1994, after a February storm put two feet of water into the pilot station. He brought the notebook to a council hearing last spring. That is how the graduate student, Anika Sorensen, heard about the gauge.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "Sorensen studies coastal flooding at the state university. She downloaded the full record from the federal archive, cleaned it — the gauge was moved eleven meters in 1968 and replaced twice since — and published her analysis in July. The rise itself was not news to her. What surprised her was how clearly it showed up in a place as small as Port Alden.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b9s1",
+									"text": "\"A lot of small harbors have gaps in the record, or the gauge sits on a pier that is itself sinking,\" she said. \"This one sits on bedrock and it almost never went dark. It is one of the cleanest records on this stretch of coast.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b10",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b10s1",
+									"text": "The days that matter",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b11",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b11s1",
+									"text": "Average sea level is not what floods Front Street. What floods Front Street is a high tide, pushed higher by a storm surge, arriving at the same hour as a strong onshore wind. Tide scientists call the extra height on those days the \"residual,\" the part of the water level that the tide tables did not predict.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b12",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b12s1",
+									"text": "Sorensen counted the hours each year when the water at North Pier stood more than 60 centimeters above the average high tide. That is roughly the level at which the lowest block of Front Street, near the fish market, starts to take water through the storm drains.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b13",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b13s1",
+									"text": "In the 1950s the harbor crossed that line on average about four hours a year. In the 2010s it was 31 hours a year. Last winter it was 58.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b14",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b14s1",
+									"text": "Most of that change is the long line. Storms have not become dramatically more frequent at Port Alden; the record shows no clear trend in the size of surges. But when the baseline sits 17 centimeters higher, a surge that once stopped at the curb now reaches the doorway.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b15",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b15s1",
+									"text": "\"That was the part that made it click for me,\" said Hollis Carter, the Public Works engineer who was asked to review the seawall estimates. \"I had been treating flooding as a storm problem. It is really a baseline problem with storms on top.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b16",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b16s1",
+									"text": "Carter now keeps a chart on his office wall that shows each winter's flood hours as a bar. He points to the bars from the last five years. \"Every one of those is taller than any bar before 2000,\" he said. \"Nobody on staff had seen that picture before this year.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b17",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b17s1",
+									"text": "What the pier remembers",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b18",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b18s1",
+									"text": "The gauge itself is a steel pipe about the width of a coffee can, bolted to the pier's last piling. Inside is a float, a pulley and, since 2004, an acoustic sensor that bounces sound off the water's surface. A small solar panel keeps it running. The data goes by cellular modem to a federal server, which is why the record survived three changes of ownership at the pier.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b19",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b19s1",
+									"text": "Before 1968 the gauge sat in a wooden stilling well near the old ferry slip. Its paper charts, rolls of graph paper traced by a pen, are stored in the basement of the county records office. Sorensen spent two weeks there matching the charts against the digital record, which was transcribed in the 1970s by a federal contractor.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b20",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b20s1",
+									"text": "She found eleven days where the transcription was off by a full foot, almost certainly a misread line on the chart. None of them changed the long-term trend. Three of them were storm days that had been recorded as ordinary.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b21",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b21s1",
+									"text": "\"It is a humbling thing to hold a piece of paper from 1952 where someone wrote 'wind NE, heavy' in the margin,\" she said. \"They were paying attention. We should too.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b22",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b22s1",
+									"text": "The seawall math",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b23",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b23s1",
+									"text": "The council approved a $48 million seawall reconstruction in the spring. The plan raises the wall by 60 centimeters along the most exposed stretch of Front Street and replaces the storm drains with ones that close when the tide is high.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b24",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b24s1",
+									"text": "Carter's job was to check whether 60 centimeters was enough. The original design, drawn up in 2016, used a sea-level estimate that assumed the pre-1990 rate would continue. Using the current rate, the new wall would still hold back the worst surge on record through about 2060. Using the steeper projections in the state's guidance, it holds until the mid-2050s.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b25",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b25s1",
+									"text": "\"The honest answer is that the wall buys us thirty to forty years,\" Carter said. \"That is a good deal for $48 million. It is not forever, and nobody should say it is.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b26",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b26s1",
+									"text": "The design includes footings strong enough to add another 40 centimeters later without rebuilding the base. That added about $3 million to the cost, and it was the part of the plan that drew the most questions at the hearings.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b27",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b27s1",
+									"text": "Council member Ellen Marsh, who cast the only vote against the plan, said she supported the wall but not the harbor fee that pays for a quarter of it. \"The people on Front Street did not raise the ocean,\" she said. \"I don't think they should carry a quarter of the bill for it.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b28",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b28s1",
+									"text": "What the city does not know",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b29",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b29s1",
+									"text": "The gauge measures the sea. It does not measure the land, and on this part of the coast the land is moving too.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b30",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b30s1",
+									"text": "A GPS station on the roof of the county courthouse shows the ground under downtown Port Alden sinking about half a millimeter a year, slow enough to ignore for most purposes. But the fill along the harbor, laid in the 1920s over what used to be tidal flats, may be settling faster. Nobody has measured it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b31",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b31s1",
+									"text": "Carter has asked for $40,000 in next year's budget to survey the elevation of every storm drain inlet along Front Street and repeat the survey in five years. Without it, he said, the city is planning around the water and guessing about the ground.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b32",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b32s1",
+									"text": "The other gap is groundwater. When the sea rises, the water table under low-lying streets rises with it, which can push water up through basements and drains even on dry days. Two businesses on Chestnut Street reported that kind of flooding last winter. The city has no wells to track it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b33",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b33s1",
+									"text": "Up and down the coast",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b34",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b34s1",
+									"text": "Port Alden is not the only harbor reading its gauge more closely. Three towns within a day's drive have gauges with records longer than forty years, and all three show the same bend in the line around 1990.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b35",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b35s1",
+									"text": "In Kessick Bay, forty miles north, the town raised its harbor road by a meter in 2018 after the flood-hour count passed 50 in two winters running. The work cost $11 million and closed the road for a summer. The town manager, Lorna Pike, said the count was what persuaded the budget committee. \"We had been arguing about whether it was getting worse,\" she said. \"The count ended the argument.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b36",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b36s1",
+									"text": "Farther south, Wexley took the opposite approach. Instead of raising the harbor front, the town bought out eleven waterfront properties over six years and turned the land into a park that is allowed to flood. The buyouts were voluntary and slow, and two owners are still in court over the price. But the park took on water four times last winter and nobody had to pump out a basement.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b37",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b37s1",
+									"text": "Sorensen said neither choice is right for every place. \"Kessick has a road it can't move. Wexley had houses on a marsh. Port Alden has a downtown that people want to keep,\" she said. \"What they share is that they decided based on their own record, not a national average.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b38",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b38s1",
+									"text": "The state coastal office keeps a list of gauges with usable records. There are nine on this coast. Only four towns have published an analysis like Sorensen's. The office has offered a small grant for towns that want to do one, and so far two have applied.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b39",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b39s1",
+									"text": "What people on Front Street are doing now",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b40",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b40s1",
+									"text": "The seawall will not be finished until 2029. In the meantime, the businesses closest to the water have been making their own arrangements.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b41",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b41s1",
+									"text": "The fish market on Dock Street installed flood barriers at its loading doors in 2021, aluminum panels that slot into steel frames when a storm is forecast. The owner, Sam Okoye, said the barriers have been up nine times in three winters. \"The first time we used them we were proud of ourselves,\" he said. \"Now it is a chore, like taking the trash out.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b42",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b42s1",
+									"text": "Three doors down, the hardware store moved its electrical panel from the basement to the first floor. The bookshop on the corner raised its lowest shelves by a foot.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b43",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b43s1",
+									"text": "The city offers a matching grant of up to $5,000 for flood-proofing work on Front Street and Chestnut Street. Fourteen businesses have used it since it opened in 2022. The program has $60,000 left for this year.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b44",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b44s1",
+									"text": "Residents who want to follow the gauge can see the live reading on the federal tide website, which updates every six minutes. Brenner checks it every morning. \"It is the first thing I look at, before the weather,\" he said. \"The weather tells you what might happen. The gauge tells you what did.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b45",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b45s1",
+									"text": "Reading the next forty years",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b46",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b46s1",
+									"text": "Sorensen's report ends with a recommendation that is easy to make and hard to follow: look at the record every year. Count the flood hours, compare them with the projections, and adjust the plans when the bars start to run ahead of the line.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b47",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b47s1",
+									"text": "\"The mistake is to do a big study once, build something, and then stop looking,\" she said. \"The gauge will tell you if you got it wrong. You just have to read it.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b48",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b48s1",
+									"text": "Public Works has agreed to publish the flood-hour count each spring alongside the seawall construction report. The first one is due in April.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b49",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b49s1",
+									"text": "Brenner, for his part, still writes down the high-water mark after every storm. His notebook is on its fourth volume. On the inside cover of the first one, in pencil, is the date of the 1994 storm and a note: \"Two feet in the station. Won't be the last.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b50",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b50s1",
+									"text": "\"I wasn't trying to predict anything,\" he said. \"I just thought somebody ought to write it down.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ines"
+					},
+					{
+						"byline": "byline-mara",
+						"roleLabel": "Additional reporting"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"science",
+						"city"
+					],
+					"tag": [
+						"harbor",
+						"budget"
+					]
+				}
+			},
+			{
+				"id": "post-brief-parking",
+				"slug": "front-street-lot-free-on-sundays",
+				"status": "published",
+				"data": {
+					"title": "Front Street lot will be free on Sundays",
+					"kicker": "Briefly",
+					"excerpt": "A six-month trial covers the 140 metered spaces near the ferry terminal.",
+					"dateline": "PORT ALDEN",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The city will stop charging for parking at the Front Street lot on Sundays starting next month, the transportation department said Friday. The change covers the 140 metered spaces between Dock Street and the ferry terminal.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "Weekday and Saturday rates stay at $2 an hour. The department estimates the lot takes in about $1,900 on an average Sunday, most of it from ferry passengers.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "Council member Rosa Lindqvist, who asked for the change in June, said the goal is to bring church and market traffic back downtown. The council can end the trial after six months if revenue from the other five city lots drops.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-priya"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"news"
+					],
+					"tag": [
+						"city-council",
+						"transit"
+					]
+				}
+			},
+			{
+				"id": "post-bike-lanes",
+				"slug": "city-council-bike-lane-budget-harbor-avenue",
+				"status": "published",
+				"data": {
+					"title": "City council sets aside $2.3 million for new bike lanes on Harbor Avenue",
+					"kicker": "City Hall",
+					"dek": "The lanes were promised after a cyclist was struck near the ferry terminal last year. Construction starts in the spring.",
+					"excerpt": "The council approved $2.3 million for protected bike lanes on Harbor Avenue, a year after a cyclist was struck near the ferry terminal.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "blb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb1s1",
+									"text": "The Port Alden City Council voted 5-2 Monday to set aside $2.3 million for protected bike lanes along Harbor Avenue, fulfilling a promise made after a cyclist was struck by a delivery van near the ferry terminal last October. The lanes will run 1.4 miles from the terminal to the intersection with Cedar Street, separated from traffic by a raised curb rather than paint.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb2s1",
+									"text": "The crash that prompted the project injured 34-year-old commuter Daniel Wren, who was riding to the 7 a.m. ferry when the van turned across the shoulder he was using. Wren spent six weeks recovering from a broken collarbone and pelvis and has attended nearly every council meeting since, asking for a physical barrier rather than another repainted line.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb3s1",
+									"text": "\"I'm glad it's happening, but I wish it hadn't taken someone getting hurt to get here,\" Wren said after Monday's vote. \"That road has needed this for fifteen years.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb4s1",
+									"text": "Design details",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb5s1",
+									"text": "City engineer Fatima Cho said the design calls for a six-foot lane on each side of Harbor Avenue, buffered by a raised concrete curb and set back from parked cars to reduce the risk of a driver opening a door into traffic. Left-turn pockets will be added at three intersections where crash data showed the most conflicts between cars and cyclists.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb6s1",
+									"text": "The project will eliminate roughly forty on-street parking spaces between the terminal and Cedar Street, a point that drew objections from several shop owners during public comment. Council member Hector Ruiz, one of the two no votes, said he supported the bike lanes but wanted the parking loss studied further before construction begins.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "blb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "blb7s1",
+									"text": "Cho said her office will put the project out to bid this winter, with construction starting in spring and running through the summer. The city plans to keep at least one traffic lane open in each direction throughout the work, though Harbor Avenue will likely narrow to a single lane in each direction near the ferry terminal for about six weeks.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-priya"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"news"
+					],
+					"tag": [
+						"budget",
+						"city-council"
+					]
+				}
+			},
+			{
+				"id": "post-water-main",
+				"slug": "water-main-break-floods-chestnut-street",
+				"status": "published",
+				"data": {
+					"title": "Water main break floods Chestnut Street overnight, crews say fix could take weeks",
+					"kicker": "City Hall",
+					"dek": "A century-old pipe gave way just after midnight. Three businesses are pumping out water this morning.",
+					"excerpt": "A water main break flooded Chestnut Street overnight. Crews say a full repair could take weeks.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/street-flood.jpg",
+							"alt": "A stop sign standing in a flooded residential street",
+							"filename": "street-flood.jpg"
+						}
+					},
+					"featured_image_caption": "By morning the water stood a foot deep at the corner of Chestnut and Fifth.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "wmb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb1s1",
+									"text": "A century-old water main under Chestnut Street failed just after midnight Tuesday, sending water through the roadway and into the basements of three businesses before crews could shut off the flow. Public works director Alan Petrosky said the break was in a cast-iron pipe installed in 1919 and that a full repair could take two to three weeks.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb2s1",
+									"text": "Residents on the 200 block of Chestnut Street reported hearing what sounded like rushing water around 12:20 a.m. By the time crews arrived, water had pooled to a depth of nearly a foot at the low point of the street and was draining into the basements of Chestnut Hardware, the Blue Kettle cafe, and a dental office next door.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb3s1",
+									"text": "\"I got the call at one in the morning and by the time I got down here my whole storage room was underwater,\" said Marcy DiSalvo, who owns Chestnut Hardware with her husband. \"We lost most of what was on the bottom shelves. Paint, fasteners, a couple hundred dollars of stock, easy.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb4s1",
+									"text": "Why the repair will take weeks",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb5s1",
+									"text": "Petrosky said the section of pipe that failed is part of a stretch the city has flagged for replacement since 2019 but had not yet funded. Rather than patch the break and leave the surrounding pipe in place, public works plans to replace roughly 300 feet of main, which requires ordering pipe that is not kept in stock locally.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb6s1",
+									"text": "Chestnut Street will remain closed to through traffic between Pine and Willow streets while the work is underway, and water pressure in the surrounding blocks may drop or discolor intermittently, according to a notice the city sent to affected addresses Tuesday morning.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "wmb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "wmb7s1",
+									"text": "All three flooded businesses reopened Tuesday afternoon after several hours of pumping, though DiSalvo said she expects to be doing inventory and drying out stock for days. The city has told property owners to file claims through its risk management office if they believe the aging main is at fault for their losses.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-mara"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"news",
+						"city"
+					],
+					"tag": []
+				}
+			},
+			{
+				"id": "post-ferry-cut",
+				"slug": "ferry-schedule-cut-to-three-round-trips",
+				"status": "published",
+				"data": {
+					"title": "Ferry schedule cut to three round trips a day",
+					"kicker": "Transit",
+					"dek": "The operator blames fuel costs and low winter ridership. Commuters say the new schedule doesn't work with shift hours.",
+					"excerpt": "The harbor ferry drops to three round trips a day starting next month, down from five.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/car-ferry.jpg",
+							"alt": "Cars parked on the open deck of a car ferry leaving port",
+							"filename": "car-ferry.jpg"
+						}
+					},
+					"featured_image_caption": "Rough winter crossings have already pushed the ferry's on-time rate below 80 percent.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "fcb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb1s1",
+									"text": "Port Alden's ferry operator will cut service to three round trips a day starting November 1, down from the current five, citing rising fuel costs and winter ridership that has fallen for three years running. Harborline Ferries announced the change Wednesday in a notice posted at the terminal and mailed to monthly pass holders.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb2s1",
+									"text": "Under the new schedule, boats will depart Port Alden at 6:15 a.m., 12:30 p.m., and 5:45 p.m., dropping the 8:40 a.m. and 3:15 p.m. runs that Harborline says carried the fewest riders last winter. The company said the change will run through March, when it plans to restore the fuller schedule for the spring season.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb3s1",
+									"text": "Harborline general manager Colin Baptiste said diesel costs for the fleet's two boats have risen about 40 percent since last winter, while average winter ridership has dropped to roughly a third of what the route carries in summer. \"We looked at cutting a boat from the fleet entirely, and this was the option that kept us running through the season instead,\" Baptiste said.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb4s1",
+									"text": "Commuters say the math doesn't work for them",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb5s1",
+									"text": "The cuts fall hardest on riders who use the ferry to commute, several of whom said the remaining schedule doesn't line up with typical shift hours on the mainland side. Nurse Odalys Feng, who works a 7 a.m. shift at Harborview Medical, said dropping the 8:40 a.m. run doesn't affect her, but losing the 3:15 p.m. departure means a nearly three-hour wait after her shift ends.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb6",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb6s1",
+									"text": "\"I either leave work early and lose pay, or I sit in the terminal for three hours,\" Feng said. \"There's nothing in between anymore.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "fcb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fcb7s1",
+									"text": "Baptiste said Harborline has heard similar complaints from about a dozen riders since the notice went out and is reviewing whether a fourth, later trip could be added back without adding a second boat. The company receives a modest annual subsidy from the town but is not a municipal service, meaning the town council has no formal vote over the schedule.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-priya"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"city"
+					],
+					"tag": [
+						"transit"
+					]
+				}
+			},
+			{
+				"id": "post-diner-closes",
+				"slug": "front-street-diner-closes-after-forty-years",
+				"status": "published",
+				"data": {
+					"title": "Front Street diner closes after forty years",
+					"dek": "The Anchor Diner served its last breakfast Sunday. The owner says the building's new landlord tripled the rent.",
+					"excerpt": "The Anchor Diner closed Sunday after forty years on Front Street, done in by a tripled rent.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/counter-stools.jpg",
+							"alt": "A row of empty metal stools at a counter",
+							"filename": "counter-stools.jpg"
+						}
+					},
+					"featured_image_caption": "The Anchor Diner's counter seated fourteen. Regulars filled it for one last breakfast Sunday.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "dcb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb1s1",
+									"text": "The Anchor Diner served its last breakfast Sunday morning after forty years on Front Street, closing its doors for good after owner Ruth Palakiko said her new landlord nearly tripled the rent on the building's ten-year lease renewal. The diner had operated in the same storefront since 1986, when Palakiko's late father-in-law first opened it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb2s1",
+									"text": "Palakiko said the building's previous owner, who had held the lease steady for over a decade, sold the property last spring to a real estate group based two towns over. When the diner's lease came up for renewal in August, the new owner offered a rate of $6,800 a month, up from the $2,400 the diner had been paying.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb3s1",
+									"text": "\"I asked them if there was any room to negotiate and they said that was the market rate for Front Street now,\" Palakiko said. \"Maybe it is. I just can't sell enough eggs and coffee to cover it.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb4s1",
+									"text": "Forty years of regulars",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb5s1",
+									"text": "Sunday's final service drew a line out the door by 7 a.m., with several longtime customers arriving before the diner opened to make sure they got a table. Retired harbor pilot Grady Nakamura, who said he had eaten breakfast at the Anchor most mornings since 1994, brought his own camera to take a photo of the counter one last time.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb6",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb6s1",
+									"text": "\"This was where you found out what was actually going on in town, better than the paper some days,\" Nakamura said, laughing. \"No offense.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "dcb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dcb7s1",
+									"text": "Palakiko said she has not decided whether to look for a smaller space elsewhere in town or leave the restaurant business altogether. Six employees, some of whom had worked at the diner for more than fifteen years, lost their jobs with the closure. The storefront's new owner has not announced a replacement tenant.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-daniel"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"business"
+					],
+					"tag": [
+						"small-business"
+					]
+				}
+			},
+			{
+				"id": "post-fishing-coop",
+				"slug": "fishing-co-op-direct-to-restaurants",
+				"status": "published",
+				"data": {
+					"title": "Fishing co-op signs deal to sell direct to restaurants",
+					"kicker": "Port Alden",
+					"dek": "Cutting out the distributor means better prices for boat crews, the co-op says, and fresher fish for a dozen local kitchens.",
+					"excerpt": "The harbor fishing co-op will sell directly to a dozen local restaurants under a new deal, cutting out the distributor.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/fishing-boat.jpg",
+							"alt": "A red fishing boat tied up at a harbor dock",
+							"filename": "fishing-boat.jpg"
+						}
+					},
+					"featured_image_caption": "The co-op's catch will now go straight from the dock to a dozen Front Street kitchens.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "cob1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob1s1",
+									"text": "The Port Alden Fishing Co-op has signed a deal to sell a portion of its catch directly to four restaurants in town, cutting out the regional distributor that has bought nearly all of its members' fish for the past two decades. Co-op president Walt Ferreira said the arrangement should mean better prices for the boats and fresher fish reaching local kitchens within hours instead of days.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob2s1",
+									"text": "Under the old system, most of the co-op's daily catch was trucked to a processing facility forty miles inland, then shipped back out to distributors before some of it returned to restaurants in Port Alden itself. Ferreira said that round trip could add two to three days between a fish coming off the boat and reaching a plate, even for restaurants a few blocks from the dock.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob3s1",
+									"text": "\"We were catching fish here, sending it away, and buying some of it back a few days later,\" Ferreira said. \"It never made sense once you actually laid it out.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob4s1",
+									"text": "What changes for the boats",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob5s1",
+									"text": "The four restaurants involved, including the Ledger House and Compass Grill, have agreed to buy set daily quantities of whatever the co-op's boats bring in that morning, at a price roughly 15 percent higher than what the distributor was paying per pound. Ferreira said the co-op will still sell the bulk of its catch through the distributor, since local restaurant demand can't absorb everything eleven boats bring in on a good day.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob6",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob6s1",
+									"text": "Compass Grill owner Denise Okwuosa said the deal lets her put the boat name and catch date on the menu, something she couldn't do reliably before. \"Customers ask where the fish came from all the time. Now I can actually tell them and mean it,\" she said.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "cob7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cob7s1",
+									"text": "Ferreira said the co-op plans to add a small dockside stand next summer so residents can buy directly as well, pending approval from the town's health department.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-daniel"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"business"
+					],
+					"tag": [
+						"port",
+						"harbor"
+					]
+				}
+			},
+			{
+				"id": "post-theater",
+				"slug": "community-theater-first-original-play",
+				"status": "published",
+				"data": {
+					"title": "Community theater stages its first original play in a decade",
+					"kicker": "Arts",
+					"dek": "The Alden Players wrote and rehearsed the show themselves after their usual licensed script fell through.",
+					"excerpt": "The Alden Players open an original play this weekend, their first since a 2016 licensing dispute with a publisher.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/theater-seats.jpg",
+							"alt": "Rows of red upholstered theater seats",
+							"filename": "theater-seats.jpg"
+						}
+					},
+					"featured_image_caption": "The community hall seats 180. The Alden Players expect to fill it for all six performances.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "thb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb1s1",
+									"text": "The Alden Players will open their first original play in ten years this weekend, after the licensed script the community theater had planned to stage fell through in June when the rights holder pulled it from small-theater availability. Rather than scramble for a replacement, the group's twelve members spent the summer writing their own.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb2s1",
+									"text": "Director Carla Bettencourt said the group had already sold season tickets built around the canceled script when the news came. With no time to license and rehearse a substitute before the fall slot, the cast decided at a July meeting to write something themselves, drawing on stories from around Port Alden.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb3s1",
+									"text": "\"Once London Rights Group told us we couldn't have the play, somebody in the room said, well, we know plenty of stories from around here,\" Bettencourt said. \"That turned into the play.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb4s1",
+									"text": "A story built from the town itself",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb5s1",
+									"text": "The resulting play, titled \"Low Water,\" follows three generations of a fictional Port Alden fishing family and was written collectively by the cast over eleven weeks of Tuesday-night sessions, with retired English teacher and cast member Phil Ostrowski assembling the scenes into a final script.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb6s1",
+									"text": "Rehearsals ran longer than usual, Bettencourt said, since the group was still revising dialogue into September, two weeks before opening night. The theater's forty-two-seat house has already sold out three of its five scheduled performances.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "thb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "thb7s1",
+									"text": "\"Least Bettencourt could do a script from a stranger, we know how the story ends before we start,\" said cast member Judith Alvarenga. \"With this one, we didn't, not until we'd written it.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-tom"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"culture"
+					],
+					"tag": [
+						"arts"
+					]
+				}
+			},
+			{
+				"id": "post-band-album",
+				"slug": "local-band-second-album-airplay",
+				"status": "published",
+				"data": {
+					"title": "Local band's second album gets airplay up and down the coast",
+					"dek": "Low Tide Radio recorded the album in a converted boathouse. Three stations outside Port Alden are now playing it.",
+					"excerpt": "Low Tide Radio's second album, recorded in a boathouse, is now getting airplay outside Port Alden.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "bab1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab1s1",
+									"text": "Port Alden trio Low Tide Radio released its second album, \"Salt Line,\" last month, and the record is now getting regular airplay on three stations outside town for the first time in the band's five-year run. The group recorded the eleven-track album over the winter in a converted boathouse on Wharf Road that doubles as bassist Dev Cariappa's home studio.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab2s1",
+									"text": "Singer and guitarist Nessa Thorvald said the band chose the boathouse partly out of necessity, since studio time at commercial facilities was more than the band could afford after a lean summer of gigs, and partly because the space itself shaped the record's sound.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab3",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab3s1",
+									"text": "\"You can hear the room on half these tracks. The ceiling's low and it's mostly wood, so everything's got this warmth to it we never got recording anywhere else,\" Thorvald said. \"We didn't plan that, it just happened.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab4s1",
+									"text": "From the boathouse to the coast",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab5s1",
+									"text": "\"Salt Line\" has picked up regular rotation on WKHN in Millbrook, a college station in Fenwick, and an independent station in Corrigan Bay, roughly ninety miles up the coast, according to drummer Owen Bracewell, who has been tracking spins since the album's release. The band had struggled to get attention from stations outside Port Alden with its first album in 2023.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab6s1",
+									"text": "Bracewell said a music director at the Fenwick station reached out directly after hearing the record through a mutual contact, and the other two stations picked it up after that. The band has booked four shows in Fenwick and Corrigan Bay for October, its first out-of-town dates since forming.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "bab7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "bab7s1",
+									"text": "\"We're still playing the Ledger Room every other Friday, that hasn't changed,\" Thorvald said. \"It's just nice knowing people two towns over are hearing it too.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-tom"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"culture"
+					],
+					"tag": [
+						"arts"
+					]
+				}
+			},
+			{
+				"id": "post-harbor-days",
+				"slug": "harbor-days-returns-this-weekend",
+				"status": "published",
+				"data": {
+					"title": "Harbor Days returns this weekend after two years off, with a shorter parade route and a smaller fireworks budget than organizers wanted",
+					"kicker": "Harbor Days",
+					"dek": "The festival was cancelled twice for budget reasons. This year's version is smaller, but it's back.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "hdb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb1s1",
+									"text": "Harbor Days returns to Port Alden this weekend for the first time in two years, after budget shortfalls forced the town to cancel the festival in each of the previous two summers. This year's event runs Friday through Sunday along the waterfront, but organizers say residents should expect a smaller version of the festival than the one they remember from before the cancellations.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb2s1",
+									"text": "The parade route has been shortened from its traditional 1.2-mile path down Front Street and around the harbor loop to a half-mile stretch of Front Street alone, and the Sunday-night fireworks show will run roughly eight minutes, about half the length of the last full display in 2023.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb3s1",
+									"text": "Festival committee chair Mara Okafor said the town allocated $34,000 for this year's Harbor Days, down from the roughly $61,000 the festival cost in 2023, and that every cut was made to preserve the parts residents said they'd miss most.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb4",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb4s1",
+									"text": "\"We asked people directly, at the spring meeting, what they could live without and what they couldn't,\" Okafor said. \"Nobody wanted to lose the boat parade or the food vendors, so the fireworks and the parade route are where we found the savings.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb5",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb5s1",
+									"text": "What's happening this weekend",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb6s1",
+									"text": "Friday evening opens with the boat parade in the harbor at 6:30, followed by live music on the town dock stage through 9 p.m. Saturday runs a full schedule from 10 a.m. to 8 p.m., including the shortened parade at noon, a crafts market along Front Street, and a kids' fishing derby at the north pier. Fireworks close out the festival Sunday at 8:45 p.m., launched from a barge anchored off the town dock rather than the pier used in past years.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb7",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb7s1",
+									"text": "Vendors on the return",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb8s1",
+									"text": "Twenty-two vendors signed up for this year's crafts market, close to the pre-cancellation average, according to organizers. Chowder vendor Ben Truscott, who has set up a stand at Harbor Days for eleven years, said he raised his prices slightly to cover higher ingredient costs but was glad to be back regardless.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb9",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb9s1",
+									"text": "\"Two years is a long time for a stand you only run three days a year to just not happen,\" Truscott said. \"I had customers texting me this spring asking if it was really coming back. Now I can tell them yes.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hdb10",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hdb10s1",
+									"text": "Okafor said the committee hopes a fuller budget next year will allow the parade route and fireworks to return closer to their previous scale, but that no decision has been made and next year's Harbor Days will depend on the town's budget process this winter. Additional reporting for this story was contributed by Tom Achterberg and Priya Natarajan.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-mara"
+					},
+					{
+						"byline": "byline-tom",
+						"roleLabel": "Additional reporting"
+					},
+					{
+						"byline": "byline-priya",
+						"roleLabel": "Additional reporting"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"culture"
+					],
+					"tag": [
+						"harbor"
+					]
+				}
+			},
+			{
+				"id": "post-term-limits",
+				"slug": "term-limits-would-fix-more-than-theyd-break",
+				"status": "published",
+				"data": {
+					"title": "Term limits would fix more than they'd break",
+					"kicker": "Editorial",
+					"dek": "Three council members have held their seats for over twenty years. That isn't a sign of stability. It's a sign no one else is running.",
+					"excerpt": "Long council tenures aren't stability. They're a sign no one else is running. The Ledger's editorial board argues for term limits.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "tlb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb1s1",
+									"text": "Three members of the Port Alden City Council have now held their seats for more than twenty years. Between them, Councilmembers Odom, Marchetti, and Krantz account for sixty-eight years of continuous service on a seven-member body. We think it's worth asking what that number is actually telling us, because we don't think it's telling us what it looks like at first glance.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb2s1",
+									"text": "The easy read is stability. Voters keep choosing the same people because those people are doing a good job, or at least a job good enough that no one has bothered to run against them. We'd like to believe that. But look at the last four election cycles in these three wards, and a different story shows up: in six of the last eight races across those seats, the incumbent ran unopposed.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb3s1",
+									"text": "That is not the electorate rewarding good governance. That is an absence of choice being mistaken for a mandate.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb4s1",
+									"text": "Why the bench stays empty",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb5s1",
+									"text": "We don't think Odom, Marchetti, or Krantz are doing a bad job, and this isn't an argument against any of them individually. It's an argument about incentives. When a council seat is effectively a lifetime appointment, the people who might otherwise run, a small-business owner with strong opinions on the harbor fee, a parent frustrated with the school board's relationship to the council, a retired teacher who has sat through a decade of budget hearings, calculate correctly that the seat isn't really open. So they don't run. And the incumbent's twenty-year tenure gets read as popularity rather than as the absence of anyone else on the ballot.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb6s1",
+									"text": "A twelve-year cap, or two four-year terms plus one, would not remove good councilmembers from office. It would guarantee that every seat in this town becomes genuinely contestable at least once a decade, whether or not the incumbent chooses to step aside. That is not a punishment for long service. It is a floor under democratic competition that this town currently does not have.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tlb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tlb7s1",
+									"text": "The council will not vote to limit its own members' terms, which is exactly why this is a question for a ballot referendum rather than a council resolution. We'd support putting it in front of voters next fall.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-board"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"opinion"
+					],
+					"tag": [
+						"city-council"
+					]
+				}
+			},
+			{
+				"id": "post-library-board",
+				"slug": "library-board-should-meet-in-public",
+				"status": "published",
+				"data": {
+					"title": "The library board should meet in public, not behind closed doors",
+					"kicker": "Guest column",
+					"dek": "Budget decisions that affect every branch are being made in committee, where the public can't weigh in until it's too late.",
+					"excerpt": "A volunteer argues the library board's budget committee should open its meetings before decisions are already made.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "lbb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb1s1",
+									"text": "I have volunteered at the Port Alden Public Library for eleven years, first shelving returns on Tuesday afternoons and now helping run the summer reading program at the Chestnut Street branch. I love this library. That is exactly why I am writing this.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb2s1",
+									"text": "Every year, the library board's finance committee meets in a closed session to work out which branches get funded at what level before the board's public vote. By the time that vote happens, usually in a ten-minute agenda item at a regular meeting, the real decisions have already been made. The public sees a resolution to approve a budget that was written behind a door we were never let through.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb3s1",
+									"text": "This year, that closed committee decided to cut the Chestnut Street branch's Saturday hours in half to cover a shortfall at the main branch downtown. I found out from a flyer taped to our front desk, not from anyone on the board, and certainly not from any meeting I could have attended to ask a question before the decision was final.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb4s1",
+									"text": "A closed committee is not required by law",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb5s1",
+									"text": "I looked into this. Nothing in the library's charter requires the finance committee to meet privately. The board adopted that practice on its own, years ago, and has kept it out of what I can only guess is habit. Other town bodies, the planning board, the school committee, hash out budget tradeoffs in open session, with residents in the room, before anything is finalized. There is no reason the library board should be different.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb6s1",
+									"text": "I'm not asking the board to abandon planning or to conduct every conversation in public in real time. I'm asking that the tradeoffs, this branch or that one, these hours or those, be debated where the people who use the branches can hear the reasoning and say something before the decision is locked in, not after.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "lbb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "lbb7s1",
+									"text": "A library exists because a town decided that access to books and a quiet room and a computer shouldn't depend on what you can afford. It seems worth extending that same principle to how the library decides its own budget. Open the committee meeting. Let us in before the vote, not just for it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ruth",
+						"roleLabel": "Guest column"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"opinion"
+					],
+					"tag": [
+						"libraries"
+					]
+				}
+			},
+			{
+				"id": "post-tide-gauge",
+				"slug": "tide-gauge-north-pier-first-upgrade-since-1987",
+				"status": "published",
+				"data": {
+					"title": "The tide gauge at the north pier just got its first upgrade since 1987",
+					"kicker": "Science",
+					"dek": "The old mechanical gauge is being replaced with a digital sensor that reports water levels every six minutes instead of once a day.",
+					"excerpt": "The north pier's tide gauge, unchanged since 1987, is being replaced with a digital sensor.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/coast-survey.jpg",
+							"alt": "An archival photograph of a surveyor on coastal rocks beside a marked pole in shallow water",
+							"filename": "coast-survey.jpg"
+						}
+					},
+					"featured_image_caption": "Before 1987, tide readings at the north pier were taken by eye from a marked pole like this one.",
+					"featured_image_credit": "Museum of New Zealand Te Papa Tongarewa / rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "tgb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb1s1",
+									"text": "The tide gauge at the north pier has been replaced for the first time since 1987, swapping out a mechanical float-and-pulley system for a digital sensor that reports water levels every six minutes instead of once a day. The upgrade, installed last week by the county's coastal monitoring office, gives Port Alden its first near-continuous record of harbor tide levels.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb2s1",
+									"text": "The old gauge worked on a principle that hasn't changed much since the nineteenth century: a float sitting on the water's surface rode up and down inside a stilling well, a perforated pipe that damped out wave action, and a mechanical pen traced the float's movement onto a paper chart that a technician had to change and read by hand once a day.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb3s1",
+									"text": "The new instrument is a radar-based sensor mounted above the water rather than in it, which measures the distance to the surface using the return time of a low-power radar pulse and converts that into a water level reading. Readings are logged automatically and transmitted off-site, meaning nobody has to visit the pier to retrieve data.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb4s1",
+									"text": "Why six minutes matters",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb5s1",
+									"text": "Marine scientist and county monitoring coordinator Ines Lindqvist said the jump from daily to six-minute readings changes what the data can actually be used for. A single daily reading can tell you the tide came in; it can't tell you how fast, or whether a storm surge briefly pushed water higher than the tide alone would explain.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb6",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb6s1",
+									"text": "\"With one point a day, you get a tide table. With one point every six minutes, you get the actual shape of the water moving through the harbor, storm surges, wind setup, the works,\" Lindqvist said. \"That's the difference between knowing the tide came in and knowing why the seawall got hit harder on one Tuesday than any other Tuesday that month.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb7s1",
+									"text": "The finer-grained data will feed into the same tide record engineers cited when assessing the harbor seawall's condition, and Lindqvist said six years of continuous readings should be enough to detect subtle trends, like whether the harbor's high-tide baseline is creeping upward faster than the regional average, that a once-daily reading could never have resolved.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "tgb8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "tgb8s1",
+									"text": "The county plans to publish the raw readings on a public data page later this year, though a temporary feed showing the current water level is already live at the county's coastal monitoring site.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ines"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"science"
+					],
+					"tag": [
+						"harbor"
+					]
+				}
+			},
+			{
+				"id": "post-honey-season",
+				"slug": "beekeepers-worst-honey-season-in-a-decade",
+				"status": "published",
+				"data": {
+					"title": "Beekeepers say this was the worst honey season in a decade",
+					"kicker": "Science",
+					"dek": "A wet spring and a late cold snap cut the harvest in half for most of the county's hobbyist beekeepers.",
+					"excerpt": "Port Alden's beekeepers report their smallest honey harvest in a decade after a wet spring.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "hsb1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb1s1",
+									"text": "Beekeepers across the county are calling this the worst honey season in at least a decade, after a wet spring delayed early nectar flows and a late cold snap in May killed off blossoms just as hives were finally building strength. Most of the county's hobbyist beekeepers say their harvest came in at roughly half of a typical year.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb2s1",
+									"text": "Port Alden Beekeepers Association president Walt Simmons, who keeps fourteen hives on a property off Meeting House Road, said he pulled about 180 pounds of honey this year, down from a usual haul closer to 400 pounds. \"I've had bad years before. I haven't had a year where the spring and then the frost both went against us,\" Simmons said.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb3s1",
+									"text": "A rough spring for the whole hive",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb4s1",
+									"text": "Rain kept bees confined to their hives through much of April, cutting into the early flow from maple and willow that colonies typically use to build up strength after winter. Then a cold snap on May 9 dropped temperatures into the low thirties overnight across most of the county, killing blossoms on fruit trees and blackberry brambles just as they were opening.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb5",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb5s1",
+									"text": "\"Bees can wait out a rainy week. What they can't do is get nectar from a flower that got frozen before it opened,\" Simmons said. \"That's not a bad week for the bees, that's a hole in the whole season.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb6s1",
+									"text": "Beekeeper Priya Deshmukh, who keeps six hives in her backyard on the west side of town, said several of her hives came through the summer light enough on stored honey that she had to feed them sugar syrup earlier than usual this fall just to get them through winter. \"Normally I'm taking honey off in August and not thinking about feeding until November. This year I was feeding by September,\" she said.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "hsb7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "hsb7s1",
+									"text": "Simmons said the association isn't recommending members treat this year as a sign of a longer-term problem, since honey seasons have swung this widely before, but he added that two of the county's newer beekeepers lost hives outright this year and may not restart next spring.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ines"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"science"
+					],
+					"tag": [
+						"wildlife"
+					]
+				}
+			},
+			{
+				"id": "post-gulls",
+				"slug": "a-field-guide-to-the-gulls-of-the-north-pier",
+				"status": "published",
+				"data": {
+					"title": "A field guide to the gulls of the north pier",
+					"kicker": "Out on the water",
+					"dek": "Four species, one breakwater, and the reason the big ones always get the fries.",
+					"excerpt": "Four species of gull share the north pier. Here is how to tell them apart.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/north-pier-gulls.jpg",
+							"alt": "Gulls and cormorants on the water beside a stone breakwater",
+							"filename": "north-pier-gulls.jpg"
+						}
+					},
+					"featured_image_caption": "Gulls and cormorants work a school of bait fish off the breakwater.",
+					"featured_image_credit": "John Robert McPherson / Wikimedia Commons (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "Stand on the north pier at low tide and you will see four kinds of gull working the breakwater, usually within a few feet of each other and usually arguing. Telling them apart takes about a week of practice and this guide.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The regulars",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The largest and loudest is the western gull, gray-backed with a heavy yellow bill and a red spot near the tip. It is the bird that will take a sandwich from an open hand if you let it get close enough, and the one most likely to win a fight over a dropped fry.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Smaller and paler is the ring-billed gull, easy to spot by the thin black ring near the tip of its bill. They travel in loose flocks and tend to keep their distance from the western gulls, which outweigh them by nearly a pound.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "The California gull shows up mostly in fall and winter, dark-eyed with a red and black spot on the bill instead of a single red mark. It is the most likely of the four to be seen far from the water, working the parking lot behind the fish market.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "The one that is not a gull",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "The bird most often misidentified as a gull on the pier is actually a Caspian tern, sharp-winged with a heavy orange-red bill and a black cap. Terns dive for fish rather than scavenging, which is the fastest way to rule out a gull if you catch one in the act. Watch the water for a moment and the difference becomes obvious: a tern hovers and drops, a gull mostly just waits for something to be dropped for it.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "The fries question has an easy answer. Western gulls win most contested food because they are the biggest bird on the pier and the least likely to back down. Size settles most arguments here, the same as it does at the council microphone on a Tuesday night.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b9s1",
+									"text": "Fall brings a fifth, less common visitor worth watching for: the Heermann's gull, dark gray with a bright red bill, usually arriving in small numbers after breeding season further south. It tends to keep to itself near the far end of the breakwater rather than joining the scrum at the fish market end.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b10",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b10s1",
+									"text": "Bring binoculars if you have them, and give the birds room. A gull that has learned to take food from hands is a gull that will eventually get hurt trying.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ines"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"science"
+					],
+					"tag": [
+						"wildlife",
+						"harbor"
+					]
+				}
+			},
+			{
+				"id": "post-bell-schedule",
+				"slug": "school-district-delays-new-bell-schedule",
+				"status": "published",
+				"data": {
+					"title": "School district delays the new bell schedule by a year",
+					"dek": "High schools will keep the 7:45 a.m. start until the bus contract is renegotiated.",
+					"excerpt": "The later high school start time is on hold until next fall.",
+					"dateline": "PORT ALDEN",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/schoolyard.jpg",
+							"alt": "An empty schoolyard with basketball hoops in front of a low brick school",
+							"filename": "schoolyard.jpg"
+						}
+					},
+					"featured_image_caption": "Classes start at 7:45 a.m. for another year.",
+					"featured_image_credit": "WiinterU / Wikimedia Commons (CC0)",
+					"correction": "An earlier version of this article said the board vote was 6-1. It was 5-2.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Port Alden school board voted 5-2 Monday night to delay a later start time for high schools by a year, keeping the 7:45 a.m. bell through the coming school year while the district renegotiates its bus contract.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The board approved the later, 8:30 a.m. start in principle last spring, following research showing teenagers do better with more sleep in the morning. But the district's bus contractor said it could not add the extra routes a staggered schedule requires without a new agreement, and that agreement is not ready. A staggered schedule, under which elementary schools would start earlier to free up buses for a later high school run, needs roughly a dozen additional routes the district does not currently have drivers for.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "\"We still believe in the later start,\" said board president Owen Castellano. \"We do not believe in changing the bell schedule without a bus plan that actually gets kids to school. A later start that leaves a third of our students without a reliable ride is not a win for anyone.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Two board members, Alicia Ferrante and Devon Marsh, voted against the delay, arguing the district had a full year to solve the bus problem and used the time poorly.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "\"We knew this was coming in the spring,\" Ferrante said. \"A year is not a short runway, and I don't think the district treated it like one until the last few months, when the contract deadline was already close.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "District officials said the bus contractor, Coastway Transit, wants a rate increase tied to fuel costs before it will commit to the added routes. Negotiations are expected to resume in the new year, with a goal of implementing the later start the following fall. Superintendent Lena Vartan said the district was also exploring whether a smaller local operator could take on a portion of the added routes to reduce its reliance on Coastway.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "Parents at the meeting were split. Several said they had already adjusted family schedules around the promised change and were frustrated by the delay. Others said they would rather wait a year than risk a schedule with unreliable buses, recalling a rocky rollout of a similar change in a neighboring district two years ago that left some students waiting at stops for buses that never arrived.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-priya"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"news"
+					],
+					"tag": [
+						"schools"
+					]
+				}
+			},
+			{
+				"id": "post-cinema",
+				"slug": "dock-street-cinema-reopens",
+				"status": "published",
+				"data": {
+					"title": "The Dock Street cinema reopens with a 35mm projector and 212 seats",
+					"kicker": "Review",
+					"dek": "After six years dark, the Majestic is back, and it is showing film on film.",
+					"excerpt": "The Majestic reopens after six years with a restored projector and a repertory program.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/majestic-projector.jpg",
+							"alt": "A vintage film projector with two reels",
+							"filename": "majestic-projector.jpg"
+						}
+					},
+					"featured_image_caption": "A restored projector, threaded for the opening night double bill.",
+					"featured_image_credit": "Malcolmxl5 / Wikimedia Commons (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Majestic reopened Friday night after six years dark, and the first thing you notice is the smell, warm dust and hot bulb, the smell of an actual film projector running. The Dock Street cinema is back, with 212 seats and a restored 35mm projector, and it is showing film on film.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The theater closed in the year the multiplex opened out by the highway, and most people assumed it would become another empty storefront on a block that already had three. Instead a nonprofit formed by three former projectionists bought the building, spent four years raising money, and spent most of it on the projector rather than the seats. The group raised just over 600,000 dollars, mostly in small donations from people who remembered watching a first film there as kids.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The double bill",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Opening night paired a restored print of a 1962 harbor noir shot partly in Port Alden with a short program of local footage from the city archive, including grainy color film of the old fish market before the fire. The noir looked better than any streaming version of it I have seen, grain and all, and the crowd audibly reacted when a shot lingered on a stretch of Front Street that is still recognizable sixty years later.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "The seats are the original 1948 frames, reupholstered but not replaced, and they are narrower than what a modern theater would install. Nobody at opening night seemed to mind, though the nonprofit's director joked from the stage that legroom was the one thing the restoration grant did not cover.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "What is next",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "The Majestic plans a repertory program of one film a week drawn from its own archive of prints, plus a monthly local shorts night open to submissions from anyone in the city. Tickets are priced at eight dollars, cheaper than the multiplex, on purpose, and the theater is selling a modest ten-film season pass aimed at getting regulars in the door before winter.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "It will not replace a multiplex, and it is not trying to. What it offers instead is a room built for one kind of watching, and a projector that took four years and most of a nonprofit's budget to get right. Worth the trip, and worth going before the season pass sells out.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-tom"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"culture"
+					],
+					"tag": [
+						"arts"
+					]
+				}
+			},
+			{
+				"id": "post-library",
+				"slug": "the-library-should-stay-open-until-ten",
+				"status": "published",
+				"data": {
+					"title": "The library should stay open until ten",
+					"kicker": "Guest column",
+					"dek": "The reading room is the only warm, quiet, free place on the east side after 6 p.m.",
+					"excerpt": "A library volunteer makes the case for evening hours.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/reading-room.jpg",
+							"alt": "A library reading room with wooden tables between tall book stacks",
+							"filename": "reading-room.jpg"
+						}
+					},
+					"featured_image_caption": "A reading room at closing time.",
+					"featured_image_credit": "Alecrr / Wikimedia Commons (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "I have volunteered three evenings a week at the Port Alden Public Library for eleven years, and I can tell you exactly what happens when the doors close at 6 p.m. The people still outside are the ones who needed the library most.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "A high school junior finishing a paper on the bus home. A man between shifts at the port who uses the reading room to fill out job applications because his apartment has no reliable internet. A grandmother watching two kids until their mother's second job ends at nine. All of them are locked out by six.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The library is not a luxury",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "On the east side, where the library sits, there is no coffee shop that stays open past eight, no community center with evening hours, and one park that is not well lit after dark. The reading room is the only warm, quiet, free place a person can sit for an hour without buying something or being asked to leave. I have watched regulars build their evenings around it: study groups, a retired shipwright who comes in every night to read the newspaper cover to cover, teenagers who clearly have nowhere quieter to be.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "The city cut evening hours six years ago during a budget shortfall that has long since ended. Every year since, the library board has asked to restore them, and every year the request has been pushed to next year's budget. I have sat through five of those budget hearings myself, and the answer is always some version of not this year.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "Extending hours to ten o'clock, four nights a week, would cost the city roughly 90,000 dollars a year, mostly in staff overtime. That is less than a tenth of one percent of the city's general fund, and less than the cost overrun on a single traffic circle the city built two years ago.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "I am not asking the council to build something new. The building, the books, and the staff already exist. I am asking them to unlock a door that is already there four more hours a night, for the people who have nowhere else to go once the sun sets.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ruth",
+						"roleLabel": "Guest column"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"opinion"
+					],
+					"tag": [
+						"libraries"
+					]
+				}
+			},
+			{
+				"id": "post-editorial-budget",
+				"slug": "publish-the-budget-in-plain-english",
+				"status": "published",
+				"data": {
+					"title": "Publish the budget in plain English",
+					"kicker": "Editorial",
+					"dek": "A 412-page PDF is not transparency. The city can do better, and it would cost almost nothing.",
+					"excerpt": "The city budget should come with a two-page summary a resident can read in ten minutes.",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The city's proposed budget for next year runs 412 pages. It contains, somewhere, every dollar the city plans to spend and every dollar it expects to collect. Almost no resident will ever read it, and the city has made no real effort to change that.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "This is not a complaint about the budget itself, which by most accounts is a reasonable document written by people who know what they are doing. It is a complaint about the fact that knowing what is in it requires either a finance degree or a week of evenings, and most residents have neither to spare. This board has read all 412 pages, more than once, and can say plainly that the information residents most want, how much of their money is going where, is in there, buried between procurement schedules and fund transfer tables that only make sense to someone who wrote them.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "A two-page fix",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Other cities our size publish a plain-English summary alongside the full budget: where the money comes from, where it goes, and what changed from last year, in two pages a resident can read over breakfast. Some produce a one-page graphic. None of this requires new software or a consultant's contract. It requires an afternoon from someone who already understands the budget and a willingness to write for a reader who does not.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "The city's own budget office could produce this. The mayor's communications staff, three people whose entire job is explaining city decisions to the public, could produce this. The fact that neither has, year after year, is not a resource problem. It is a decision that transparency ends at publication rather than at understanding.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "A resident who cannot find the harbor fee in a 412-page PDF is not a disengaged citizen. They are a person with a job and a family and forty minutes in the evening, being handed a document built for someone else. That resident is the same person the council asks to show up and testify at budget hearings, then wonders why so few of them do.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "We are asking for one thing: a two-page summary, in plain English, attached to the front of next year's budget. It would cost the city almost nothing and would do more for public trust than any line item in the document itself.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-board"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"opinion"
+					],
+					"tag": [
+						"budget",
+						"city-council"
+					]
+				}
+			},
+			{
+				"id": "post-port-contract",
+				"slug": "port-cargo-contract-local-jobs",
+				"status": "published",
+				"data": {
+					"title": "What the port's new cargo contract means for local jobs",
+					"dek": "The ten-year deal brings two more ships a week. It also brings automated cranes.",
+					"excerpt": "More ships, fewer crane operators: reading the fine print of the port deal.",
+					"dateline": "PORT ALDEN",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/port-cranes.jpg",
+							"alt": "Container cranes on a quay at dusk",
+							"filename": "port-cranes.jpg"
+						}
+					},
+					"featured_image_caption": "Two of the four cranes on the east quay are due to be replaced.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "standard",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Port Alden Harbor Authority signed a ten-year cargo handling contract Tuesday with Meridian Shipping Lines that will bring two additional container ships a week to the east quay starting in March. It will also bring four automated cranes, replacing machines that have been operated by hand since the quay was rebuilt in 1998.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The deal is the largest in the port's history by shipping volume, and port officials have promoted it publicly as a win for the local economy, projecting 60 million dollars a year in added cargo fees over the life of the contract. What officials have said less about is what the automation clause means for the roughly 40 crane operators currently working the east quay.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "Under the contract, two of the quay's four cranes will be replaced with automated units within eighteen months, with the remaining two converted by year four. The union representing crane operators says the timeline effectively eliminates a third of its jobs on that quay by the contract's midpoint.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "What the contract actually says",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "A copy of the contract obtained by the Ledger shows the automation requirement was written into the deal at Meridian's request, not proposed by the port authority. Meridian's larger vessels, the contract states, require crane cycle times the current hand-operated equipment cannot consistently meet, particularly during the night shifts when the new schedule adds most of its volume.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "Port authority director Wendell Cho said the trade-off was unavoidable. \"We had a choice between this contract, with automation, and no contract at all,\" Cho said. \"Meridian was clear that the cranes were not negotiable. The jobs question is real, and we are not pretending otherwise.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "What happens to the operators",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "The contract includes a retraining fund of 2.4 million dollars, administered jointly by the port authority and the operators' union, intended to move displaced crane operators into other port roles, including crane maintenance and logistics coordination. Union officials say the fund covers roughly half the workers likely to be displaced, based on current wage levels and training program costs.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b9s1",
+									"text": "\"Half a solution is not a solution for the other half,\" said union local president Grace Onyekwere. \"We are grateful the fund exists. We are also going to be at every council meeting between now and March asking where the other twenty jobs go.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b10",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b10s1",
+									"text": "The council has scheduled a public briefing on the contract for next month, though the deal itself does not require council approval, since the harbor authority operates with independent contracting power under the city charter.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-daniel"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"business"
+					],
+					"tag": [
+						"port"
+					]
+				}
+			},
+			{
+				"id": "post-bakery",
+				"slug": "a-bakery-a-rent-increase-and-nine-days",
+				"status": "published",
+				"data": {
+					"title": "A family bakery, a rent increase, and a lease with nine days left",
+					"dek": "Delgado Bakery has been on Front Street for 31 years. Its new lease would raise the rent by 40 percent.",
+					"excerpt": "A Front Street bakery weighs a 40 percent rent increase.",
+					"dateline": "PORT ALDEN",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/bakery-counter.jpg",
+							"alt": "Croissants and pastries behind a bakery counter window",
+							"filename": "bakery-counter.jpg"
+						}
+					},
+					"featured_image_caption": "The morning case at a Front Street bakery.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "top",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "Delgado Bakery has sold bread and pastry from the same corner of Front Street for 31 years. Two weeks ago, owner Rosa Delgado got a new lease with nine days to sign it, raising her rent by 40 percent.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "\"My father signed the first lease on this spot in 1993,\" Delgado said, standing behind a case of morning bread that sells out most days before ten. \"I have never once been late on rent. This is not about whether I pay. It is about whether I can.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "The building's new owner, a real estate group that bought the block last year, said the increase brings the bakery's rent in line with current market rates on Front Street, where storefronts now command nearly double what they did a decade ago. A spokesperson for the group said the company had honored the bakery's below-market rate for two years after the purchase and could not do so indefinitely without raising rents elsewhere in the building to cover the gap.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Nine days",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "Delgado said the short window to decide, rather than the increase itself, was what nearly ended the business. \"Forty percent is a number I can try to plan around over months. Nine days is not enough time to plan anything. It is enough time to panic.\" She said she spent the first three days calling other bakers who had gone through similar renegotiations, trying to learn what leverage, if any, a small tenant actually has.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "After a petition organized by neighboring shop owners drew more than 1,200 signatures, the landlord extended the deadline by three weeks and agreed to phase the increase in over eighteen months rather than all at once. Delgado signed the revised lease Monday, a version that still raises her rent by the full 40 percent but spreads the increase across six-month steps instead of a single jump.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "\"We are staying,\" she said. \"It is going to be tighter than it was. We are cutting back on hours for two part-time staff and raising the price of a loaf by a quarter. But we are staying.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "Delgado's is the third Front Street business to renegotiate a lease under similar terms this year, following a hardware store and a tailor shop, both of which also secured phased increases after public pressure. Not every shop on the block has been as fortunate; a used bookstore two doors down closed in the spring rather than accept its new terms, and its storefront has sat empty since.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-daniel"
+					},
+					{
+						"byline": "byline-mara",
+						"roleLabel": "Additional reporting"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"business"
+					],
+					"tag": [
+						"small-business"
+					]
+				}
+			},
+			{
+				"id": "post-green-water",
+				"slug": "why-the-harbor-turned-green",
+				"status": "published",
+				"data": {
+					"title": "Why the harbor water turned green in August",
+					"dek": "Warm water, a wet July, and fertilizer from upstream farms fed an algae bloom that lasted eleven days.",
+					"excerpt": "Scientists trace the August bloom to runoff and a heat wave.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/algae.jpg",
+							"alt": "Thick green algae covering rocks at the waterline",
+							"filename": "algae.jpg"
+						}
+					},
+					"featured_image_caption": "Algae on the rocks below the east quay at low tide.",
+					"featured_image_credit": "rawpixel (CC0)",
+					"placement": "top",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "For eleven days in August, the water off the east quay turned the color of pea soup, and Port Alden residents wanted to know why. Scientists at the East Bay Marine Lab say the answer is a wet July, a heat wave, and fertilizer that traveled a long way to get here.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The bloom was made up mostly of Microcystis, a cyanobacteria that thrives in warm, nutrient-heavy water and can produce toxins at high concentrations. Water chemist Anneke Visser, who led the lab's daily testing during the bloom, said toxin levels stayed below the threshold for a public health advisory throughout, though the lab recommended keeping pets out of the water. The lab tested samples twice a day at three points along the shoreline for the full eleven days, a pace Visser said the small staff could not have sustained much longer.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "Where the nutrients came from",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "A wet July sent more runoff down the river than usual, carrying fertilizer washed off farmland roughly 40 miles upstream. Ten straight days above 90 degrees then warmed the harbor enough to let the algae multiply quickly once it arrived. Visser said the combination, rather than either factor alone, was what made this bloom larger and longer-lasting than anything the lab has recorded in a decade of monitoring.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "\"We've had small blooms before, gone in a day or two,\" Visser said. \"Eleven days is new for this harbor, and that is what has us paying closer attention than the color alone would suggest.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "The lab is installing sensors upstream this winter to catch nutrient spikes earlier, before a bloom is visible from the shore. Visser said the goal is a warning system that gives the city days, not hours, of notice, enough time to post advisories before a weekend when the waterfront is busiest.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "Residents can reduce their own contribution by limiting fertilizer use on lawns near storm drains, Visser said, though she was careful to note that home lawns are a small factor next to agricultural runoff. \"It's not the main cause. It still adds up across a whole city, and it's the one piece of this that residents can actually do something about themselves.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-ines"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"science"
+					],
+					"tag": [
+						"harbor",
+						"wildlife"
+					]
+				}
+			},
+			{
+				"id": "post-night-bus",
+				"slug": "the-night-buses-that-keep-the-east-side-moving",
+				"status": "published",
+				"data": {
+					"title": "The night buses that keep the east side moving",
+					"kicker": "After midnight",
+					"dek": "Three routes run after midnight. Most riders are going to work, not coming home from it.",
+					"excerpt": "Who rides the buses after midnight, and why the city wants to cut one route.",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/night-bus.jpg",
+							"alt": "A bus pulling away from a stop on a dark city street, its lights blurred by a long exposure",
+							"filename": "night-bus.jpg"
+						}
+					},
+					"featured_image_caption": "Route 9 leaves the hospital at 1:40 a.m.",
+					"featured_image_credit": "Osman Rana / StockSnap (CC0)",
+					"placement": "top",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The 1:40 a.m. bus from Port Alden General Hospital to the east side carries eleven riders on a typical night. Nine of them are going to work, not coming home from it, according to a rider count the Ledger conducted over two weeks in September.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "Route 9 is one of three that run through the night in Port Alden, and transit officials are reviewing whether to cut it as part of a budget review next spring. Ridership data shows Route 9 carries fewer passengers per hour than the two other night routes, the kind of number that tends to attract a budget committee's attention. The route costs the transit authority an estimated 210,000 dollars a year to operate, most of it driver wages for the overnight shift differential.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "Who is on the bus",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "Driver Luis Ferreira has run the route for six years and says the low numbers do not tell the whole story. \"Every one of these eleven people has a shift that starts before the day buses run. Cut this route and they are not switching to a car. Most of them do not have one.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "Riders interviewed on a recent overnight run included a hospital custodian starting a 3 a.m. shift, a baker headed to Delgado Bakery's early oven, and a security guard finishing a stretch at the port. All three said Route 9 was their only way to work without a car, and two said a rideshare for the same trip would cost more than they make in the first two hours of their shift.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "The transit authority says no final decision has been made and that the spring review will weigh ridership against cost per rider across the whole system, not Route 9 in isolation. A public comment period is expected to open in January, and the authority has said it will hold at least one evening meeting on the east side rather than only at its downtown offices.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "Ferreira said he plans to keep driving the route until someone tells him otherwise. \"I know these people's names. I know what shift they're working. That has to count for something in a budget spreadsheet.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-priya"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"city"
+					],
+					"tag": [
+						"transit"
+					]
+				}
+			},
+			{
+				"id": "post-seawall",
+				"slug": "council-votes-to-rebuild-the-seawall",
+				"status": "published",
+				"data": {
+					"title": "Council votes to rebuild the seawall before the next storm season",
+					"kicker": "Harbor",
+					"dek": "The $48 million plan passed 6-1 after four hours of testimony. Front Street property owners will pay a quarter of it.",
+					"excerpt": "A $48 million seawall, a new harbor fee, and a deadline of next October.",
+					"dateline": "PORT ALDEN",
+					"featured_image": {
+						"$media": {
+							"url": "https://assets.ondelva.com/masthead/seawall-archive.jpg",
+							"alt": "An archival photograph of storm waves breaking over a stone sea wall",
+							"filename": "seawall-archive.jpg"
+						}
+					},
+					"featured_image_caption": "Waves over the old sea wall, in a photograph from the late 1800s. Parts of the wall still stand.",
+					"featured_image_credit": "J. Paul Getty Museum / rawpixel (public domain)",
+					"placement": "lead",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "b1",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b1s1",
+									"text": "The Port Alden City Council voted 6-1 Tuesday night to approve a $48 million plan to rebuild the harbor seawall, ending eighteen months of debate over how to pay for it. The vote came after four hours of public testimony, most of it from Front Street property owners who will cover a quarter of the cost through a new harbor fee.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b2",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b2s1",
+									"text": "The current wall, built in stages between 1911 and 1954, failed in three places during storms last winter, flooding the ground floor of six Front Street buildings and closing the corner fish market for eleven days. A city-commissioned engineering report concluded the wall would not survive another decade of rising tides without a full rebuild, and that a partial patch job would cost nearly as much as starting over while buying the city only a few extra years. The council first flagged the wall's condition last spring, after a routine inspection turned up cracking along its base that engineers had not seen before, and spent months weighing three competing proposals before settling on the plan approved Tuesday, the most expensive of the three but the only one rated as a permanent fix rather than a delay.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b3",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b3s1",
+									"text": "Four hours of testimony",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b4",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b4s1",
+									"text": "The council chamber was full by 6 p.m., with an overflow crowd watching from the lobby on a video feed. Most speakers supported the plan, though several Front Street landlords asked the council to spread the harbor fee over a longer period than the proposed ten years, and two speakers representing a renters' association asked what would stop landlords from passing the new fee on to tenants through higher rents.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b5",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b5s1",
+									"text": "Coastal engineer Hollis Grant, who wrote the risk assessment the council relied on, told the chamber the wall's failure points were not isolated incidents but a pattern that would repeat and worsen each winter without intervention. He walked the council through tide gauge data going back to the 1970s, showing the harbor's average high tide has risen nearly eight inches since the wall's newest section was poured in 1954.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b6",
+							"style": "blockquote",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b6s1",
+									"text": "\"The wall is not going to fix itself, and it is not going to wait for us to agree on how to pay for it,\" Grant told the council.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b7",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b7s1",
+									"text": "Council member Priscilla Odom cast the lone dissenting vote, arguing the city should have pursued a state coastal resilience grant more aggressively before asking property owners to shoulder a share of the cost. \"I don't doubt the wall needs to be rebuilt,\" Odom said. \"I doubt we tried hard enough to find the money somewhere else first, and once this fee is in place, it is going to be very hard to undo it even if more state money shows up next year.\"",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b8",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b8s1",
+									"text": "Who pays, and when",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b9",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b9s1",
+									"text": "The $48 million will be raised through a combination of sources, according to the finance plan approved alongside the construction vote:",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b10",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b10s1",
+									"text": "$12 million from a new harbor fee, paid by Front Street property owners over ten years",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "b11",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b11s1",
+									"text": "$28 million from a municipal bond, to be repaid from the general fund over twenty years",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "b12",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b12s1",
+									"text": "$8 million from a state coastal resilience grant the city secured in the spring",
+									"marks": []
+								}
+							],
+							"markDefs": [],
+							"listItem": "bullet",
+							"level": 1
+						},
+						{
+							"_type": "block",
+							"_key": "b13",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b13s1",
+									"text": "City finance director Owen Marsh said the bond portion would add roughly eleven dollars a year to the average homeowner's property tax bill once repayment begins, a figure he called modest against the cost of repeated flood damage on Front Street. The harbor fee, by contrast, applies only to commercial property within two blocks of the waterline. Permitting is expected to take through the winter, with construction beginning in June and a target of substantial completion before next October, ahead of the storm season that damaged the current wall, proceeding in three sections so that no more than a third of the waterfront walkway is closed at any one time.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						},
+						{
+							"_type": "block",
+							"_key": "b14",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "b14s1",
+									"text": "Front Street landlord Beatriz Soto, whose building flooded twice last winter, said she supported the plan despite the new fee. \"It's not nothing, but it's less than what I'd pay in flood repairs every other year if the wall stays as it is,\" she said after the vote.",
+									"marks": []
+								}
+							],
+							"markDefs": []
+						}
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-mara"
+					},
+					{
+						"byline": "byline-daniel",
+						"roleLabel": "Additional reporting"
+					}
+				],
+				"taxonomies": {
+					"category": [
+						"news",
+						"city"
+					],
+					"tag": [
+						"city-council",
+						"budget",
+						"harbor"
+					]
+				}
+			}
+		]
+	}
+}

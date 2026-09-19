@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    env:
+      # Lets Astro resize EmDash media in the build (see astro.config.mjs)
+      EMDASH_SITE_URL: http://localhost:4321
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      # corepack can't run pnpm 12. Install the packageManager version with npm
+      - run: npm i -g "$(node -p "require('./package.json').packageManager.split('+')[0]")"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm check:contrast
+      - run: pnpm lint
+      # Apply the seed (schema + sample content) to the local D1 through the dev-only setup bypass
+      - name: Seed local database
+        run: |
+          # --background so `astro dev logs` and `astro dev stop` below can reach it
+          pnpm exec astro dev --background
+          for i in $(seq 60); do curl -sf -o /dev/null http://localhost:4321/_emdash/api/setup/status && break; sleep 2; done
+          curl -sf -X POST http://localhost:4321/_emdash/api/setup/dev-bypass -H "Origin: http://localhost:4321"
+          pnpm exec astro dev logs > dev.log 2>&1
+          pnpm exec astro dev stop
+          # Sample media is downloaded during seeding; a failed download or a bad $media URL leaves a post without its image
+          ! grep -E 'Failed to download|Error processing .media' dev.log
+      - run: pnpm build
+      # Serves the built worker against the seeded local D1
+      - run: pnpm exec astro preview --background
+      # Thresholds (mobile 95+) live in lighthouserc.json
+      - run: pnpm dlx @lhci/cli@0.15.1 autorun
+      # Internal links only; external links and the admin are skipped
+      - run: pnpm dlx linkinator@8.1.0 http://localhost:4321/ --recurse --skip '^https?://(?!(localhost|127\.0\.0\.1|\[::1\])[:/])' --skip '/_emdash/'
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse
+          path: |
+            .lighthouseci
+            dev.log
+          if-no-files-found: ignore

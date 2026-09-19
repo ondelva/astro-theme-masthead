@@ -1,0 +1,30 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "masthead",
+	"main": "./src/worker.ts",
+	"compatibility_date": "2026-02-24",
+	"compatibility_flags": ["nodejs_compat"],
+	// Workers Caching: serves cached pages without running the Worker. src/worker.ts keeps
+	// everything else out of it.
+	"cache": { "enabled": true },
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "masthead",
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "masthead-media",
+		},
+	],
+	// Sandboxed and marketplace plugins need Worker Loader. To enable them, uncomment this and add
+	// `sandboxRunner: sandbox()` (from "@emdash-cms/cloudflare") and
+	// `marketplace: "https://marketplace.emdashcms.com"` to emdash() in astro.config.mjs.
+	// "worker_loaders": [{ "binding": "LOADER" }],
+	// General maintenance cron trigger
+	"triggers": {
+		"crons": ["* * * * *"],
+	},
+}

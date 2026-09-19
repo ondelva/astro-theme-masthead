@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Page not found" robots="noindex">
+	<div class="not-found">
+		<p class="kicker">404</p>
+		<h1>This page didn't make the paper</h1>
+		<p>
+			The link may be old, or the story may have moved. Try the <a href="/">front page</a>, the{" "}
+			<a href="/posts">full archive</a>, or search for it.
+		</p>
+		<form method="get" action="/search" role="search">
+			<label for="nf-q" class="visually-hidden">
+				Search articles
+			</label>
+			<input id="nf-q" type="search" name="q" placeholder="Search articles" />
+			<button type="submit">Search</button>
+		</form>
+	</div>
+</Base>
+
+<style>
+	.not-found {
+		display: grid;
+		gap: var(--spacing-4);
+		max-width: calc(var(--content-width) + 2 * var(--spacing-6));
+		margin-inline: auto;
+		padding: var(--spacing-16) var(--spacing-6) var(--spacing-20);
+	}
+
+	.kicker {
+		font-family: var(--font-ui);
+		font-weight: 700;
+		color: var(--color-brand);
+	}
+
+	h1 {
+		font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+		padding-bottom: var(--spacing-4);
+		border-bottom: var(--rule-heavy);
+		hyphens: manual;
+	}
+
+	a {
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+	}
+
+	form {
+		display: flex;
+		gap: var(--spacing-2);
+		margin-top: var(--spacing-2);
+	}
+
+	input,
+	button {
+		font: inherit;
+		font-family: var(--font-ui);
+		font-size: var(--font-size-base);
+		padding: var(--spacing-2) var(--spacing-3);
+		border: 1px solid var(--color-text);
+		border-radius: 0;
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	input {
+		flex: 1;
+		min-width: 0;
+	}
+
+	button {
+		font-weight: 700;
+		background: var(--color-text);
+		color: var(--color-bg);
+		cursor: pointer;
+	}
+
+	@media (max-width: 40rem) {
+		.not-found {
+			padding: var(--spacing-10) var(--spacing-4) var(--spacing-16);
+		}
+	}
+</style>

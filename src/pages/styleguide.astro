@@ -1,0 +1,269 @@
+---
+// Token preview. Dev only: production builds answer 404.
+import Base from "../layouts/Base.astro";
+
+if (!import.meta.env.DEV) return new Response(null, { status: 404 });
+
+const colors = [
+	"bg",
+	"bg-subtle",
+	"surface",
+	"text",
+	"text-secondary",
+	"muted",
+	"border",
+	"border-subtle",
+	"brand",
+	"brand-hover",
+];
+const sizes = ["5xl", "4xl", "3xl", "2xl", "xl", "lg", "base", "sm", "xs"];
+const rules = ["hair", "strong", "heavy", "double"];
+---
+
+<Base title="Styleguide" robots="noindex">
+	<main class="sg">
+		<p class="sg-nameplate">The Masthead</p>
+		<p class="sg-dateline">Vol. 1, No. 1 · Friday, September 18, 2026</p>
+
+		<section>
+			<h2 class="sg-h">Colors</h2>
+			<p class="sg-note">Switch light and dark in the footer. Ink, paper, and one red.</p>
+			<ul class="sg-swatches">
+				{colors.map((c) => (
+					<li>
+						<span class="sg-swatch" style={`background: var(--color-${c})`} />
+						<code>--color-{c}</code>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<section>
+			<h2 class="sg-h">Rules</h2>
+			{rules.map((r) => (
+				<div class="sg-rule" style={`border-top: var(--rule-${r})`}>
+					<code>--rule-{r}</code>
+				</div>
+			))}
+		</section>
+
+		<section>
+			<h2 class="sg-h">Type scale</h2>
+			<p class="sg-note">
+				Headlines: Libre Franklin. Body: Source Serif 4. Nameplate: Libre Caslon Display.
+			</p>
+			{sizes.map((s) => (
+				<p class="sg-size" style={`font-size: var(--font-size-${s})`}>
+					<code>{s}</code> City council delays the harbor vote
+				</p>
+			))}
+		</section>
+
+		<section>
+			<h2 class="sg-h">Front page grid</h2>
+			<div class="sg-grid">
+				<article class="sg-lead">
+					<p class="sg-kicker">City Desk</p>
+					<h3 class="sg-headline">Harbor bridge repairs will close two lanes through March</h3>
+					<p class="sg-byline">By Dana Whitlock · 6 min read</p>
+					<p class="sg-body sg-dropcap">
+						Crews will begin removing the eastbound deck on Monday, the transportation department
+						said Thursday, after an inspection found corrosion in four of the bridge's twelve
+						support bearings. Commuters should expect delays of fifteen to twenty minutes during the
+						morning peak.
+					</p>
+				</article>
+				<article>
+					<p class="sg-kicker">Business</p>
+					<h3 class="sg-headline sg-headline-sm">Grocery co-op posts its first annual surplus</h3>
+					<p class="sg-byline">By Omar Reyes</p>
+				</article>
+				<article>
+					<p class="sg-kicker">Culture</p>
+					<h3 class="sg-headline sg-headline-sm">The last letterpress shop on Front Street</h3>
+					<p class="sg-byline">By Ines Palmer</p>
+				</article>
+			</div>
+		</section>
+
+		<section>
+			<h2 class="sg-h">Article body</h2>
+			<div class="sg-article">
+				<p>
+					The measure passed 7 to 2 after a three-hour public comment period. Numerals set in the
+					text read as lining figures: 1,284 residents signed the petition, and the budget line is
+					$4.6 million.
+				</p>
+				<blockquote>
+					“We are not closing the bridge. We are keeping it open for the next forty years.”
+				</blockquote>
+				<p>
+					<a href="/styleguide">An inline link</a> sits in the same column. Text is left-aligned and
+					hyphenated; there are no columns inside an article.
+				</p>
+			</div>
+		</section>
+	</main>
+</Base>
+
+<style>
+	.sg {
+		max-width: var(--wide-width);
+		margin-inline: auto;
+		padding: var(--spacing-8) var(--spacing-4) var(--spacing-16);
+		display: grid;
+		gap: var(--spacing-12);
+	}
+	.sg-nameplate {
+		font-family: var(--font-display);
+		font-size: var(--font-size-nameplate);
+		line-height: 1;
+		text-align: center;
+		border-top: var(--rule-double);
+		border-bottom: var(--rule-heavy);
+		padding-block: var(--spacing-4);
+	}
+	.sg-dateline {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+		text-align: center;
+		margin-top: calc(-1 * var(--spacing-10));
+		padding-bottom: var(--spacing-2);
+		border-bottom: var(--rule-hair);
+	}
+	.sg-h {
+		font-size: var(--font-size-xl);
+		border-top: var(--rule-strong);
+		padding-top: var(--spacing-2);
+		margin-bottom: var(--spacing-4);
+	}
+	.sg-note,
+	.sg-byline,
+	code {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+	}
+	.sg-note {
+		margin-bottom: var(--spacing-4);
+	}
+	.sg-swatches {
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+		gap: var(--spacing-4);
+	}
+	.sg-swatches li {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-2);
+	}
+	.sg-swatch {
+		inline-size: 2.5rem;
+		block-size: 2.5rem;
+		border: var(--rule-hair);
+		flex: none;
+	}
+	.sg-rule {
+		padding-block: var(--spacing-2) var(--spacing-4);
+	}
+	.sg-size {
+		font-family: var(--font-heading);
+		font-weight: var(--font-weight-heading);
+		line-height: var(--leading-tight);
+		padding-block: var(--spacing-2);
+		border-bottom: var(--rule-hair);
+		overflow-wrap: anywhere;
+	}
+	.sg-size code {
+		display: inline-block;
+		min-inline-size: 3rem;
+	}
+
+	/* The signature: columns split by vertical hairlines, stacked with horizontal ones at narrow widths. */
+	.sg-grid {
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr;
+		border-top: var(--rule-heavy);
+		padding-top: var(--spacing-4);
+	}
+	.sg-grid > * {
+		padding-inline: calc(var(--column-gap) / 2);
+	}
+	.sg-grid > * + * {
+		border-inline-start: var(--rule-hair);
+	}
+	.sg-grid > :first-child {
+		padding-inline-start: 0;
+	}
+	.sg-grid > :last-child {
+		padding-inline-end: 0;
+	}
+	@media (max-width: 48rem) {
+		.sg-grid {
+			grid-template-columns: 1fr;
+		}
+		.sg-grid > * {
+			padding-inline: 0;
+			padding-block: var(--spacing-4);
+		}
+		.sg-grid > * + * {
+			border-inline-start: 0;
+			border-top: var(--rule-hair);
+		}
+	}
+	.sg-kicker {
+		font-family: var(--font-ui);
+		font-weight: 700;
+		font-size: var(--font-size-sm);
+		color: var(--color-brand);
+	}
+	.sg-headline {
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-display);
+		margin-block: var(--spacing-1) var(--spacing-2);
+	}
+	.sg-headline-sm {
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-heading);
+	}
+	.sg-body {
+		margin-top: var(--spacing-3);
+	}
+	.sg-dropcap::first-letter {
+		float: left;
+		font-family: var(--font-display);
+		font-size: 3.4em;
+		line-height: 0.8;
+		padding: 0.08em 0.08em 0 0;
+		color: var(--color-brand);
+	}
+	@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+		.sg-dropcap::first-letter {
+			float: none;
+			font-size: inherit;
+			line-height: inherit;
+			padding: 0 0.1em 0 0;
+			-webkit-initial-letter: 3;
+			initial-letter: 3;
+		}
+	}
+	.sg-article {
+		max-width: var(--content-width);
+		display: grid;
+		gap: var(--spacing-4);
+	}
+	.sg-article blockquote {
+		font-size: var(--font-size-xl);
+		font-style: italic;
+		border-inline-start: var(--rule-heavy);
+		padding-inline-start: var(--spacing-4);
+	}
+	.sg-article a {
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+		text-underline-offset: 0.15em;
+	}
+</style>

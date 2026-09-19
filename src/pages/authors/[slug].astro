@@ -1,0 +1,74 @@
+---
+import { getBylineBySlug, getEmDashCollection, decodeSlug } from "emdash";
+import Base from "../../layouts/Base.astro";
+import Archive from "../../components/Archive.astro";
+import { PAGE_CACHE } from "../../utils/cache";
+
+const slug = decodeSlug(Astro.params.slug);
+const byline = slug ? await getBylineBySlug(slug) : null;
+
+if (!byline) {
+	return Astro.rewrite("/404");
+}
+
+// The query API can't filter by byline, so this scans the newest 500 posts.
+// Past that, older stories drop off the author page; add a byline filter or index then.
+const { entries, cacheHint } = await getEmDashCollection("posts", {
+	orderBy: { published_at: "desc" },
+	limit: 500,
+});
+
+if (Astro.cache?.enabled) Astro.cache.set({ ...cacheHint, ...PAGE_CACHE });
+
+const posts = entries.filter((p) => p.data.bylines?.some((c) => c.byline.id === byline.id));
+---
+
+<Base title={byline.displayName} description={byline.bio}>
+	<Archive
+		eyebrow={byline.isGuest ? "Contributor" : "Staff"}
+		title={byline.displayName}
+		description={byline.bio}
+		posts={posts}
+		empty={`No stories by ${byline.displayName} yet.`}
+	>
+		{(byline.avatarMediaId || byline.websiteUrl) && (
+			<div slot="head" class="author-extra">
+				{byline.avatarMediaId && (
+					<img
+						src={`/_emdash/api/media/file/${byline.avatarMediaId}`}
+						alt=""
+						width="96"
+						height="96"
+					/>
+				)}
+				{byline.websiteUrl && (
+					<a href={byline.websiteUrl} rel="me noopener">
+						{new URL(byline.websiteUrl).host}
+					</a>
+				)}
+			</div>
+		)}
+	</Archive>
+</Base>
+
+<style>
+	.author-extra {
+		display: flex;
+		align-items: end;
+		gap: var(--spacing-4);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+	}
+
+	.author-extra img {
+		width: 96px;
+		height: 96px;
+		object-fit: cover;
+		filter: grayscale(1);
+	}
+
+	.author-extra a {
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+	}
+</style>

@@ -1,0 +1,983 @@
+---
+import { getMenu, getSiteSettings, getTaxonomyTerms } from "emdash";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import LiveSearch from "emdash/ui/search";
+import { Font } from "astro:assets";
+import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { getEdition } from "../utils/edition";
+import "../styles/tokens.css";
+import "../styles/theme.css";
+
+interface Props {
+	title: string;
+	pageTitle?: string | null;
+	description?: string | null;
+	image?: string | null;
+	canonical?: string | null;
+	robots?: string | null;
+	type?: "website" | "article";
+	publishedTime?: string | null;
+	modifiedTime?: string | null;
+	author?: string | null;
+	/** Pass content reference for plugin page contributions on content pages */
+	content?: { collection: string; id: string; slug?: string | null };
+	/** Home page only: full-width nameplate as the page's h1, header not sticky */
+	home?: boolean;
+}
+
+const {
+	title,
+	pageTitle,
+	description,
+	image,
+	canonical,
+	robots,
+	type = "website",
+	publishedTime,
+	modifiedTime,
+	author,
+	content,
+	home = false,
+} = Astro.props;
+const { siteTitle, siteTagline, siteLogo, siteFavicon } = resolveBlogSiteIdentity(
+	await getSiteSettings(),
+);
+// If title already includes site title (from getSeoMeta), use as-is
+const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
+
+const [menu, sectionsMenu, footerMenu, socialMenu, sectionTerms] = await Promise.all([
+	getMenu("primary"),
+	getMenu("sections"),
+	getMenu("footer"),
+	getMenu("social"),
+	getTaxonomyTerms("category"),
+]);
+// Setup without sample content creates the menus but not the sections they point to.
+// Hide /category/<slug> items until that section exists, so the strip never links to a 404.
+const sectionSlugs = new Set(sectionTerms.map((t) => t.slug));
+const sectionItems = (sectionsMenu?.items ?? []).filter((item) => {
+	const slug = item.url.match(/^\/category\/([^/?#]+)/)?.[1];
+	return !slug || sectionSlugs.has(slug);
+});
+const edition = getEdition();
+const currentPath = Astro.url.pathname;
+
+// Build public page context for plugin contributions
+// SEO data is passed here and rendered securely by EmDashHead
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: type,
+	title: fullTitle,
+	pageTitle: pageTitle ?? title,
+	description,
+	canonical,
+	image,
+	content,
+	seo: { ogImage: image, robots },
+	articleMeta: { publishedTime, modifiedTime, author },
+	siteName: siteTitle,
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<Font cssVariable="--font-body" preload={[{ weight: "400", style: "normal" }]} />
+		<Font cssVariable="--font-heading" preload />
+		<Font cssVariable="--font-display" preload={home} />
+		<title>{fullTitle}</title>
+		<link rel="icon" href={siteFavicon} />
+		<EmDashHead page={pageCtx} />
+		<script is:inline>
+			// Apply an explicit theme choice immediately to prevent flash.
+			// With no cookie, color-scheme: light dark follows the OS.
+			(function () {
+				const c = document.cookie;
+				const i = c.indexOf("theme=");
+				const theme = i >= 0 ? c.slice(i + 6).split(";")[0] : null;
+				if (theme === "dark" || theme === "light") {
+					document.documentElement.classList.add(theme);
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+		<a href="#main" class="skip-link">
+			Skip to content
+		</a>
+		<header class:list={["site-header", { "is-home": home }]}>
+			<div class="bar">
+				{home ? (
+					<p class="bar-date">{edition.date}</p>
+				) : (
+					<a href="/" class="site-title">
+						{siteLogo ? (
+							<img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="site-logo-img" />
+						) : (
+							siteTitle
+						)}
+					</a>
+				)}
+				{menu && menu.items.length > 0 && (
+					<nav class="nav-links" aria-label="Primary">
+						{menu.items.map((item) => (
+							<a
+								href={item.url}
+								target={item.target}
+								aria-current={item.url === currentPath ? "page" : undefined}
+							>
+								{item.label}
+							</a>
+						))}
+					</nav>
+				)}
+				<LiveSearch
+					placeholder="Search"
+					class="site-search"
+					inputClass="site-search-input"
+					resultsClass="site-search-results"
+					resultClass="site-search-result"
+					collections={["posts", "pages"]}
+				/>
+			</div>
+			{home && (
+				<div class="nameplate-block">
+					<h1 class="nameplate">
+						{siteLogo ? (
+							<img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="nameplate-logo" />
+						) : (
+							siteTitle
+						)}
+					</h1>
+					<p class="edition">
+						<span>
+							Vol. {edition.volume}, No. {edition.number}
+						</span>
+						{siteTagline && <span>{siteTagline}</span>}
+					</p>
+				</div>
+			)}
+			{sectionItems.length > 0 && (
+				<nav class="section-strip" aria-label="Sections">
+					{sectionItems.map((item) => (
+						<a
+							href={item.url}
+							target={item.target}
+							aria-current={currentPath.startsWith(item.url) ? "page" : undefined}
+						>
+							{item.label}
+						</a>
+					))}
+				</nav>
+			)}
+		</header>
+
+		<main id="main" tabindex="-1">
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-inner">
+				<div class="footer-top">
+					<a href="/" class="footer-title">
+						{siteTitle}
+					</a>
+					{footerMenu && footerMenu.items.length > 0 && (
+						<nav class="footer-links" aria-label="Footer">
+							{footerMenu.items.map((item) => (
+								<a href={item.url} target={item.target}>
+									{item.label}
+								</a>
+							))}
+						</nav>
+					)}
+					{socialMenu && socialMenu.items.length > 0 && (
+						<nav class="footer-links" aria-label="Social">
+							{socialMenu.items.map((item) => (
+								<a
+									href={item.url}
+									target={item.target}
+									rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+								>
+									{item.label}
+								</a>
+							))}
+						</nav>
+					)}
+				</div>
+				<div class="footer-bottom">
+					<p class="colophon">
+						{siteTitle} · {edition.date} · Vol. {edition.volume}, No. {edition.number} · Published
+						with <a href="https://emdashcms.com">EmDash</a>
+					</p>
+					<div class="theme-switcher" role="group" aria-label="Color scheme">
+						<button type="button" class="theme-btn" data-theme="light" aria-label="Light mode">
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<circle cx="12" cy="12" r="5"></circle>
+								<line x1="12" y1="1" x2="12" y2="3"></line>
+								<line x1="12" y1="21" x2="12" y2="23"></line>
+								<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+								<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+								<line x1="1" y1="12" x2="3" y2="12"></line>
+								<line x1="21" y1="12" x2="23" y2="12"></line>
+								<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+								<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+							</svg>
+						</button>
+						<button type="button" class="theme-btn" data-theme="dark" aria-label="Dark mode">
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+							</svg>
+						</button>
+						<button type="button" class="theme-btn" data-theme="system" aria-label="System theme">
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+								<line x1="8" y1="21" x2="16" y2="21"></line>
+								<line x1="12" y1="17" x2="12" y2="21"></line>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Theme switcher
+			const THEME_REGEX = /theme=([^;]+)/;
+			const themeBtns = document.querySelectorAll<HTMLButtonElement>(".theme-btn");
+			const root = document.documentElement;
+
+			function setCookie(name: string, value: string, maxAge: number = 31536000) {
+				const secure = location.protocol === "https:" ? "; Secure" : "";
+				if (value === "") {
+					document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${secure}`;
+				} else {
+					document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secure}`;
+				}
+			}
+
+			function setTheme(theme: string) {
+				if (theme === "system") {
+					setCookie("theme", "");
+					root.classList.remove("light", "dark");
+				} else {
+					setCookie("theme", theme);
+					root.classList.remove("light", "dark");
+					root.classList.add(theme);
+				}
+				themeBtns.forEach((btn) => {
+					btn.setAttribute("aria-pressed", String(btn.dataset.theme === theme));
+				});
+			}
+
+			const match = document.cookie.match(THEME_REGEX);
+			setTheme(match ? match[1] : "system");
+
+			themeBtns.forEach((btn) => {
+				btn.addEventListener("click", () => {
+					setTheme(btn.dataset.theme || "system");
+				});
+			});
+
+			// ⌘K / Ctrl+K to focus search
+			document.addEventListener("keydown", (e) => {
+				if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+					e.preventDefault();
+					document.querySelector<HTMLInputElement>(".site-search-input")?.focus();
+				}
+			});
+		</script>
+		<style is:global>
+			/*
+			 * Establish layer order: "base" has lower priority than unlayered
+			 * styles, so theme.css overrides always win regardless of source
+			 * order in the bundled CSS.
+			 */
+			@layer base;
+
+			@layer base {
+				*:where(:not([class*="emdash"]):not([class*="ec-"])),
+				*:where(:not([class*="emdash"]):not([class*="ec-"]))::before,
+				*:where(:not([class*="emdash"]):not([class*="ec-"]))::after {
+					box-sizing: border-box;
+				}
+
+				body,
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6,
+				p,
+				ul,
+				ol,
+				figure,
+				blockquote,
+				dl,
+				dd {
+					margin: 0;
+				}
+
+				ul,
+				ol {
+					padding: 0;
+				}
+
+				/*
+				 * Design tokens live in src/styles/tokens.css. Colors are
+				 * defined with light-dark(); these rules pin the scheme when
+				 * the footer switcher sets an explicit choice. With no class,
+				 * color-scheme: light dark follows the OS preference. The
+				 * @supports guard keeps the toggle from forcing dark UA form
+				 * controls on browsers stuck on the plain-light fallback.
+				 */
+				@supports (color: light-dark(#000, #fff)) {
+					:root.light {
+						color-scheme: light;
+					}
+
+					:root.dark {
+						color-scheme: dark;
+					}
+				}
+
+				@media (prefers-reduced-motion: no-preference) {
+					html {
+						scroll-behavior: smooth;
+					}
+				}
+
+				body {
+					font-family: var(--font-body);
+					font-size: var(--font-size-base);
+					line-height: var(--leading-relaxed);
+					color: var(--color-text);
+					background: var(--color-bg);
+					hyphens: auto;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
+					min-height: 100vh;
+				}
+
+				/* Links are ink. Red is for labels and hover, not for every link. */
+				a:where(:not([class*="emdash"]):not([class*="ec-"])) {
+					color: inherit;
+					text-decoration: none;
+					transition: color var(--transition-fast);
+				}
+
+				a:where(:not([class*="emdash"]):not([class*="ec-"])):hover {
+					color: var(--color-brand);
+				}
+
+				:focus-visible {
+					outline: 2px solid var(--color-brand);
+					outline-offset: 2px;
+				}
+
+				img {
+					max-width: 100%;
+					height: auto;
+					display: block;
+				}
+
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6 {
+					font-family: var(--font-heading);
+					line-height: var(--leading-tight);
+					font-weight: var(--font-weight-heading);
+					letter-spacing: var(--tracking-snug);
+				}
+
+				h1 {
+					font-weight: var(--font-weight-display);
+					letter-spacing: var(--tracking-tight);
+				}
+
+				::selection {
+					background: var(--color-brand);
+					color: var(--color-on-brand);
+				}
+
+				/*
+				 * Rule grid: columns split by vertical hairlines, rows by horizontal ones.
+				 * Markup: <div class="rule-grid"><ul>…items…</ul></div>. Every item draws its
+				 * left and top rule; the wrapper clips the ones on the outer edge, so the
+				 * rules stay correct at any column count. Set --grid to change the columns.
+				 */
+				.rule-grid {
+					overflow: hidden;
+				}
+
+				.rule-grid > * {
+					list-style: none;
+					display: grid;
+					grid-template-columns: var(--grid, repeat(4, minmax(0, 1fr)));
+					margin-inline: calc(-1 * var(--column-gap) / 2 - 1px) calc(-1 * var(--column-gap) / 2);
+					margin-top: -1px;
+				}
+
+				.rule-grid > * > * {
+					border-inline-start: var(--rule-hair);
+					border-top: var(--rule-hair);
+					padding: var(--spacing-4) calc(var(--column-gap) / 2);
+				}
+
+				@media (max-width: 60rem) {
+					.rule-grid > * {
+						grid-template-columns: var(--grid-md, repeat(2, minmax(0, 1fr)));
+					}
+				}
+
+				@media (max-width: 36rem) {
+					.rule-grid > * {
+						grid-template-columns: minmax(0, 1fr);
+					}
+				}
+
+				/* A section head: strong rule above, label in the headline face. */
+				.section-head {
+					display: flex;
+					justify-content: space-between;
+					align-items: baseline;
+					gap: var(--spacing-4);
+					border-top: var(--rule-strong);
+					padding-top: var(--spacing-2);
+				}
+
+				/* Section names take the nameplate's Caslon, so the masthead voice repeats down the page. */
+				.section-head h2 {
+					font-family: var(--font-display);
+					font-size: var(--font-size-2xl);
+					font-weight: 400;
+					line-height: 1.1;
+				}
+
+				.section-head .more {
+					font-family: var(--font-ui);
+					font-size: var(--font-size-sm);
+					color: var(--color-muted);
+				}
+
+				/* Long-form text: article bodies and static pages. One column, never justified. */
+				.prose {
+					font-size: var(--font-size-lg);
+					line-height: var(--leading-relaxed);
+				}
+
+				.prose > * + * {
+					margin-top: 1.1em;
+				}
+
+				.prose h2,
+				.prose h3 {
+					margin-top: 2em;
+					scroll-margin-top: calc(var(--nav-height) + var(--spacing-4));
+					hyphens: manual;
+				}
+
+				.prose h2 {
+					font-size: var(--font-size-xl);
+				}
+
+				.prose h3 {
+					font-size: var(--font-size-lg);
+				}
+
+				.prose h2 + *,
+				.prose h3 + * {
+					margin-top: 0.5em;
+				}
+
+				/* Body links stay ink; the red underline marks them. */
+				.prose a {
+					text-decoration: underline;
+					text-decoration-color: var(--color-brand);
+					text-decoration-thickness: 1px;
+					text-underline-offset: 0.2em;
+				}
+
+				.prose a:hover {
+					text-decoration-thickness: 2px;
+				}
+
+				.prose ul,
+				.prose ol {
+					padding-inline-start: 1.25em;
+				}
+
+				.prose li + li {
+					margin-top: 0.4em;
+				}
+
+				.prose blockquote {
+					border-inline-start: var(--rule-heavy);
+					padding-inline-start: var(--spacing-5);
+					font-style: italic;
+				}
+
+				.prose hr {
+					border: 0;
+					border-top: var(--rule-hair);
+					margin-block: 2em;
+				}
+
+				.prose img {
+					width: 100%;
+				}
+
+				.prose code {
+					font-family: var(--font-mono);
+					font-size: 0.875em;
+				}
+
+				.prose pre {
+					overflow-x: auto;
+					padding: var(--spacing-4);
+					border-block: var(--rule-hair);
+					font-size: var(--font-size-sm);
+				}
+
+				.visually-hidden {
+					position: absolute;
+					width: 1px;
+					height: 1px;
+					overflow: hidden;
+					clip-path: inset(50%);
+					white-space: nowrap;
+				}
+			}
+		</style>
+
+		<style>
+			.skip-link {
+				position: absolute;
+				inset-inline-start: var(--spacing-4);
+				top: -100px;
+				z-index: 200;
+				padding: var(--spacing-2) var(--spacing-4);
+				background: var(--color-text);
+				color: var(--color-bg);
+				font-family: var(--font-ui);
+				font-size: var(--font-size-sm);
+			}
+
+			.skip-link:focus {
+				top: var(--spacing-2);
+				color: var(--color-bg);
+			}
+
+			main:focus {
+				outline: none;
+			}
+
+			.site-header {
+				position: sticky;
+				top: 0;
+				z-index: 100;
+				background: var(--color-bg);
+				border-bottom: var(--rule-strong);
+				font-family: var(--font-ui);
+			}
+
+			.site-header.is-home {
+				position: static;
+				border-bottom: 0;
+			}
+
+			.site-header {
+				--gutter: var(--spacing-6);
+			}
+
+			.bar,
+			.nameplate-block {
+				max-width: var(--wide-width);
+				margin-inline: auto;
+				padding-inline: var(--gutter);
+			}
+
+			.bar {
+				display: flex;
+				align-items: center;
+				gap: var(--spacing-6);
+				min-height: var(--nav-height);
+			}
+
+			.site-title {
+				font-family: var(--font-display);
+				font-size: var(--font-size-nameplate-compact);
+				line-height: 1;
+				white-space: nowrap;
+			}
+
+			.site-logo-img {
+				height: 2rem;
+				width: auto;
+			}
+
+			.bar-date {
+				font-size: var(--font-size-sm);
+				color: var(--color-muted);
+			}
+
+			.nav-links {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--spacing-1) var(--spacing-5);
+				margin-inline-start: auto;
+				font-size: var(--font-size-sm);
+				font-weight: 500;
+			}
+
+			.nav-links a[aria-current="page"],
+			.section-strip a[aria-current="page"] {
+				color: var(--color-brand);
+			}
+
+			/* Home: the full-width nameplate between a double rule and a heavy rule. */
+			.nameplate-block {
+				text-align: center;
+			}
+
+			.nameplate {
+				font-family: var(--font-display);
+				font-size: var(--font-size-nameplate);
+				font-weight: 400;
+				line-height: 1;
+				letter-spacing: 0;
+				border-top: var(--rule-double);
+				border-bottom: var(--rule-heavy);
+				padding-block: var(--spacing-4) var(--spacing-3);
+				hyphens: none;
+				overflow-wrap: anywhere;
+			}
+
+			.nameplate-logo {
+				max-height: 8rem;
+				width: auto;
+				margin-inline: auto;
+			}
+
+			.edition {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0 var(--spacing-3);
+				padding-block: var(--spacing-2);
+				border-bottom: var(--rule-hair);
+				font-size: var(--font-size-sm);
+				color: var(--color-muted);
+			}
+
+			.edition span + span::before {
+				content: "·";
+				margin-inline-end: var(--spacing-3);
+			}
+
+			/* Margin instead of padding, so the strip's rules end at the text edge like every other rule. */
+			.section-strip {
+				margin-inline: max(var(--gutter), calc((100% - var(--wide-width)) / 2 + var(--gutter)));
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--spacing-1) var(--spacing-6);
+				padding-block: var(--spacing-2);
+				border-top: var(--rule-hair);
+				font-size: var(--font-size-sm);
+				font-weight: 700;
+			}
+
+			.is-home .section-strip {
+				justify-content: center;
+				border-top: 0;
+				border-bottom: var(--rule-strong);
+			}
+
+			/* Search */
+			:global(.site-search) {
+				position: relative;
+				width: var(--search-input-width);
+				--emdash-search-border-focus: var(--color-brand);
+			}
+
+			:global(.site-search-input) {
+				width: var(--search-input-width);
+				padding: var(--spacing-1) var(--spacing-2);
+				font-family: var(--font-ui);
+				font-size: var(--font-size-sm);
+				border: 0;
+				border-bottom: var(--rule-hair);
+				border-radius: 0;
+				background: transparent;
+				color: var(--color-text);
+			}
+
+			:global(.site-search-input)::placeholder {
+				color: var(--color-muted);
+			}
+
+			:global(.site-search-input):focus-visible {
+				outline: 2px solid var(--color-brand);
+				outline-offset: 2px;
+			}
+
+			:global(.site-search-results) {
+				position: absolute;
+				top: 100%;
+				inset-inline-end: 0;
+				width: min(24rem, 90vw);
+				margin-top: var(--spacing-2);
+				background: var(--color-bg);
+				border: var(--rule-strong);
+				max-height: 400px;
+				overflow-y: auto;
+				z-index: 1000;
+			}
+
+			:global(.site-search-results .emdash-live-search-loading),
+			:global(.site-search-results .emdash-live-search-no-results) {
+				padding: var(--spacing-4);
+				color: var(--color-muted);
+				font-size: var(--font-size-sm);
+			}
+
+			:global(.site-search-result) {
+				display: block;
+				padding: var(--spacing-3) var(--spacing-4);
+				color: var(--color-text);
+				border-bottom: var(--rule-hair);
+			}
+
+			:global(.site-search-result):last-child {
+				border-bottom: none;
+			}
+
+			:global(.site-search-result):hover,
+			:global(.site-search-result):focus,
+			:global(.site-search-result.focused) {
+				background: var(--color-surface);
+				outline: none;
+			}
+
+			:global(.site-search-result .emdash-live-search-result-title) {
+				display: block;
+				font-weight: 700;
+				font-size: var(--font-size-sm);
+			}
+
+			:global(.site-search-result .emdash-live-search-result-collection) {
+				display: block;
+				font-size: var(--font-size-xs);
+				color: var(--color-muted);
+				margin-top: 2px;
+			}
+
+			:global(.site-search-result .emdash-live-search-result-snippet) {
+				display: block;
+				font-family: var(--font-body);
+				font-size: var(--font-size-sm);
+				color: var(--color-muted);
+				margin-top: var(--spacing-1);
+				line-height: var(--leading-snug);
+			}
+
+			:global(.site-search-result .emdash-live-search-result-snippet mark) {
+				background: none;
+				font-weight: 600;
+				color: var(--color-text);
+			}
+
+			main {
+				min-height: calc(100vh - var(--nav-height) - 300px);
+			}
+
+			/* Footer: a double rule, the title, links, and one publication line. */
+			.site-footer {
+				margin-top: var(--spacing-16);
+				font-family: var(--font-ui);
+				font-size: var(--font-size-sm);
+			}
+
+			.footer-inner {
+				max-width: var(--wide-width);
+				margin-inline: auto;
+				padding: 0 var(--spacing-6) var(--spacing-8);
+			}
+
+			.footer-top {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: baseline;
+				gap: var(--spacing-3) var(--spacing-8);
+				border-top: var(--rule-double);
+				padding-block: var(--spacing-6);
+			}
+
+			.footer-title {
+				font-family: var(--font-display);
+				font-size: var(--font-size-xl);
+				line-height: 1;
+				margin-inline-end: auto;
+			}
+
+			.footer-links {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--spacing-1) var(--spacing-5);
+				color: var(--color-text-secondary);
+			}
+
+			.footer-bottom {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				align-items: center;
+				gap: var(--spacing-4);
+				padding-top: var(--spacing-4);
+				border-top: var(--rule-hair);
+			}
+
+			.colophon {
+				color: var(--color-muted);
+			}
+
+			.colophon a {
+				text-decoration: underline;
+				text-underline-offset: 0.15em;
+			}
+
+			/* Theme switcher */
+			.theme-switcher {
+				display: flex;
+				border: var(--rule-hair);
+			}
+
+			.theme-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 2.25rem;
+				height: 2rem;
+				background: transparent;
+				color: var(--color-muted);
+				border: 0;
+				cursor: pointer;
+			}
+
+			.theme-btn + .theme-btn {
+				border-inline-start: var(--rule-hair);
+			}
+
+			.theme-btn:hover {
+				color: var(--color-text);
+			}
+
+			.theme-btn[aria-pressed="true"] {
+				background: var(--color-text);
+				color: var(--color-bg);
+			}
+
+			@media (max-width: 40rem) {
+				.site-header {
+					position: static;
+				}
+
+				.site-header {
+					--gutter: var(--spacing-4);
+				}
+
+				.footer-inner {
+					padding-inline: var(--spacing-4);
+				}
+
+				.bar {
+					flex-wrap: wrap;
+					gap: var(--spacing-2) var(--spacing-4);
+					padding-block: var(--spacing-3);
+				}
+
+				.nav-links {
+					order: 3;
+					flex-basis: 100%;
+					margin-inline-start: 0;
+				}
+
+				/* ponytail: the nameplate comes first on phones; search goes through the menu's /search link. */
+				.bar :global(.site-search) {
+					display: none;
+				}
+
+				/* Edition line: one fact per line, no dangling separator. */
+				.edition {
+					flex-direction: column;
+				}
+
+				.edition span + span::before {
+					content: none;
+				}
+
+				/* One scrolling row of sections instead of a wrapped orphan. */
+				.section-strip {
+					flex-wrap: nowrap;
+					overflow-x: auto;
+					scrollbar-width: thin;
+					white-space: nowrap;
+					gap: var(--spacing-4);
+				}
+
+				/* Centered while it fits, start-aligned once it scrolls. */
+				.is-home .section-strip {
+					justify-content: flex-start;
+				}
+
+				.is-home .section-strip > :first-child {
+					margin-inline-start: auto;
+				}
+
+				.is-home .section-strip > :last-child {
+					margin-inline-end: auto;
+				}
+			}
+		</style>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>

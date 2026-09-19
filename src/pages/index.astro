@@ -1,0 +1,406 @@
+---
+import { getEmDashCollection, getTermsForEntries, getSiteSettings, getMenu } from "emdash";
+import type { PortableTextBlock } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+import PostCard from "../components/PostCard.astro";
+import { extractText, getReadingTime } from "../utils/reading-time";
+import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { bylineNames } from "../utils/format";
+import { PAGE_CACHE } from "../utils/cache";
+
+/** The section shown as its own column near the bottom instead of a section block. */
+const OPINION = "opinion";
+const TOP_COUNT = 3;
+const LATEST_COUNT = 5;
+const SECTION_COUNT = 4;
+
+const newest = { published_at: "desc" } as const;
+
+const [lead, top, latest, sectionsMenu, settings] = await Promise.all([
+	getEmDashCollection("posts", { where: { placement: "lead" }, orderBy: newest, limit: 1 }),
+	getEmDashCollection("posts", { where: { placement: "top" }, orderBy: newest, limit: TOP_COUNT }),
+	getEmDashCollection("posts", {
+		orderBy: newest,
+		limit: 1 + TOP_COUNT + LATEST_COUNT,
+	}),
+	getMenu("sections"),
+	getSiteSettings(),
+]);
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
+
+// Section blocks follow the order of the "sections" menu. Only /category/<slug> items become blocks.
+const sectionItems = (sectionsMenu?.items ?? []).flatMap((item) => {
+	const slug = item.url.match(/^\/category\/([^/?#]+)/)?.[1];
+	return slug ? [{ slug, label: item.label, url: item.url }] : [];
+});
+if (!sectionItems.some((s) => s.slug === OPINION)) {
+	sectionItems.push({ slug: OPINION, label: "Opinion", url: `/category/${OPINION}` });
+}
+const sectionResults = await Promise.all(
+	sectionItems.map((s) =>
+		// Over-fetch so the lead and top stories can be skipped without leaving the block short.
+		getEmDashCollection("posts", {
+			where: { category: s.slug },
+			orderBy: newest,
+			limit: SECTION_COUNT + 1 + TOP_COUNT,
+		}),
+	),
+);
+
+if (Astro.cache?.enabled) {
+	for (const r of [lead, top, latest, ...sectionResults]) Astro.cache.set(r.cacheHint);
+	Astro.cache.set(PAGE_CACHE);
+}
+
+// Front page: lead and top stories by placement, filled from the newest posts when unset.
+type Post = (typeof latest.entries)[number];
+const used = new Set<string>();
+const take = (posts: Post[], n: number) => {
+	const picked = posts.filter((p) => !used.has(p.id)).slice(0, n);
+	for (const p of picked) used.add(p.id);
+	return picked;
+};
+const [leadPost] = take([...lead.entries, ...latest.entries], 1);
+const topPosts = take([...top.entries, ...latest.entries], TOP_COUNT);
+// Section blocks skip the lead and top stories. "Latest" is a running index, so it may repeat them.
+const onFront = new Set(used);
+const latestPosts = take(latest.entries, LATEST_COUNT);
+
+// ponytail: a post filed under two sections appears in both; dedupe across sections if that shows up often.
+const sections = sectionItems.map((s, i) => ({
+	...s,
+	posts: sectionResults[i]!.entries.filter((p) => !onFront.has(p.id)).slice(0, SECTION_COUNT),
+}));
+const opinion = sections.find((s) => s.slug === OPINION);
+const sectionBlocks = sections.filter((s) => s.slug !== OPINION && s.posts.length >= 2);
+
+// One batched query for section names, used as the kicker when a post has none.
+const allPosts = [
+	...latest.entries,
+	...lead.entries,
+	...top.entries,
+	...sections.flatMap((s) => s.posts),
+];
+const categories = await getTermsForEntries(
+	"posts",
+	[...new Set(allPosts.map((p) => p.data.id))],
+	"category",
+);
+const kickerOf = (p: Post) => p.data.kicker || categories.get(p.data.id)?.[0]?.label;
+const namesOf = (p: Post) => bylineNames(p.data.bylines);
+
+const leadParagraph = leadPost
+	? extractText(
+			(leadPost.data.content as PortableTextBlock[] | undefined)
+				?.filter((b) => b._type === "block")
+				.slice(0, 1),
+		)
+	: "";
+---
+
+<Base title={siteTitle} description={siteTagline} home>
+	{!leadPost ? (
+		<section class="home empty">
+			<h2>Nothing published yet</h2>
+			<p>
+				Write the first article in the <a href="/_emdash/admin/content/posts/new">admin</a>. It will
+				lead this page until you mark another one as the lead.
+			</p>
+		</section>
+	) : (
+		<div class="home">
+			<section
+				class="rule-grid front"
+				aria-label="Front page"
+				style={topPosts.length ? undefined : "--grid: minmax(0, 2fr) minmax(0, 1fr)"}
+			>
+				<div>
+					<article class="lead">
+						{leadPost.data.featured_image && (
+							<a href={`/posts/${leadPost.id}`} class="lead-image" tabindex="-1" aria-hidden="true">
+								<Image image={leadPost.data.featured_image} loading="eager" fetchpriority="high" />
+							</a>
+						)}
+						{kickerOf(leadPost) && <p class="kicker">{kickerOf(leadPost)}</p>}
+						<h2 class="lead-title">
+							<a href={`/posts/${leadPost.id}`}>{leadPost.data.title}</a>
+						</h2>
+						{(leadPost.data.dek || leadPost.data.excerpt) && (
+							<p class="lead-dek">{leadPost.data.dek || leadPost.data.excerpt}</p>
+						)}
+						<p class="meta">
+							{namesOf(leadPost) && <span>By {namesOf(leadPost)}</span>}
+							<span>{getReadingTime(leadPost.data.content)} min read</span>
+						</p>
+						{leadParagraph && <p class="lead-body dropcap">{leadParagraph}</p>}
+						<a href={`/posts/${leadPost.id}`} class="continue">
+							Continue reading<span class="visually-hidden">: {leadPost.data.title}</span>
+						</a>
+					</article>
+
+					{topPosts.length > 0 && (
+						<ul class="stack">
+							{topPosts.map((p, i) => (
+								<li>
+									<PostCard
+										title={p.data.title}
+										href={`/posts/${p.id}`}
+										kicker={kickerOf(p)}
+										excerpt={p.data.excerpt}
+										featuredImage={i === 0 ? p.data.featured_image : null}
+										bylines={p.data.bylines}
+									/>
+								</li>
+							))}
+						</ul>
+					)}
+
+					<div class="latest">
+						<h2 class="column-head">Latest</h2>
+						<ul class="stack">
+							{latestPosts.map((p) => (
+								<li>
+									<PostCard
+										title={p.data.title}
+										href={`/posts/${p.id}`}
+										kicker={kickerOf(p)}
+										compact
+									/>
+								</li>
+							))}
+						</ul>
+						<a href="/posts" class="more-link">
+							All articles
+						</a>
+					</div>
+				</div>
+			</section>
+
+			{sectionBlocks.map((s) => (
+				<section class="block" aria-labelledby={`section-${s.slug}`}>
+					<header class="section-head">
+						<h2 id={`section-${s.slug}`}>
+							<a href={s.url}>{s.label}</a>
+						</h2>
+						<a href={s.url} class="more">
+							More in {s.label}
+						</a>
+					</header>
+					<div class="rule-grid" style={`--grid: repeat(${s.posts.length}, minmax(0, 1fr))`}>
+						<ul>
+							{s.posts.map((p, i) => (
+								<li>
+									<PostCard
+										title={p.data.title}
+										href={`/posts/${p.id}`}
+										kicker={kickerOf(p)}
+										excerpt={p.data.excerpt}
+										featuredImage={i === 0 ? p.data.featured_image : null}
+										bylines={p.data.bylines}
+									/>
+								</li>
+							))}
+						</ul>
+					</div>
+				</section>
+			))}
+
+			{opinion && opinion.posts.length > 0 && (
+				<section class="block opinion" aria-labelledby="opinion-head">
+					<header class="section-head">
+						<h2 id="opinion-head">
+							<a href={opinion.url}>{opinion.label}</a>
+						</h2>
+						<a href={opinion.url} class="more">
+							More in {opinion.label}
+						</a>
+					</header>
+					<div class="rule-grid">
+						<ul>
+							{opinion.posts.map((p) => (
+								<li>
+									<PostCard
+										title={p.data.title}
+										href={`/posts/${p.id}`}
+										kicker={namesOf(p)}
+										excerpt={p.data.excerpt}
+									/>
+								</li>
+							))}
+						</ul>
+					</div>
+				</section>
+			)}
+		</div>
+	)}
+</Base>
+
+<style>
+	.home {
+		max-width: var(--wide-width);
+		margin-inline: auto;
+		padding: var(--spacing-6) var(--spacing-6) 0;
+		display: grid;
+		gap: var(--spacing-12);
+	}
+
+	.empty {
+		max-width: var(--content-width);
+		gap: var(--spacing-3);
+		padding-block: var(--spacing-16);
+	}
+
+	.empty a {
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+	}
+
+	/* Front page: lead 2fr | top stories 1fr | latest 1fr. */
+	.front {
+		--grid: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+
+	.front > * > * {
+		padding-top: 0;
+	}
+
+	@media (max-width: 60rem) {
+		.lead {
+			grid-column: 1 / -1;
+		}
+
+		.front > * > :not(.lead) {
+			padding-top: var(--spacing-4);
+		}
+	}
+
+	.lead {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-2);
+	}
+
+	.lead-image {
+		display: block;
+		margin-bottom: var(--spacing-2);
+		background: var(--color-surface);
+	}
+
+	.lead-image :global(img) {
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+	}
+
+	.kicker {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		color: var(--color-brand);
+	}
+
+	.lead-title {
+		font-size: clamp(var(--font-size-2xl), 3.5vw, var(--font-size-4xl));
+		font-weight: var(--font-weight-display);
+		letter-spacing: var(--tracking-tight);
+		hyphens: manual;
+	}
+
+	.lead-dek {
+		font-size: var(--font-size-lg);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--spacing-3);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+
+	.lead-body {
+		margin-top: var(--spacing-2);
+		padding-top: var(--spacing-3);
+		border-top: var(--rule-hair);
+	}
+
+	/* Drop cap: the lead story's first paragraph only. */
+	.dropcap::first-letter {
+		float: left;
+		font-family: var(--font-display);
+		font-size: 3.4em;
+		line-height: 0.8;
+		padding: 0.08em 0.08em 0 0;
+		color: var(--color-brand);
+	}
+
+	@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+		.dropcap::first-letter {
+			float: none;
+			font-size: inherit;
+			line-height: inherit;
+			padding: 0 0.1em 0 0;
+			-webkit-initial-letter: 3;
+			initial-letter: 3;
+		}
+	}
+
+	.continue,
+	.more-link {
+		align-self: start;
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		border-bottom: 1px solid var(--color-brand);
+	}
+
+	.more-link {
+		display: inline-block;
+		margin-top: var(--spacing-3);
+	}
+
+	.stack {
+		list-style: none;
+	}
+
+	.stack > li + li {
+		border-top: var(--rule-hair);
+		margin-top: var(--spacing-4);
+		padding-top: var(--spacing-4);
+	}
+
+	.column-head {
+		font-family: var(--font-display);
+		font-size: var(--font-size-xl);
+		font-weight: 400;
+		border-bottom: var(--rule-strong);
+		padding-bottom: var(--spacing-1);
+		margin-bottom: var(--spacing-3);
+	}
+
+	.block {
+		display: grid;
+		gap: var(--spacing-2);
+	}
+
+	/* Opinion: the author's name leads, in ink rather than red. */
+	.opinion :global(.card-kicker) {
+		color: var(--color-text);
+	}
+
+	.opinion :global(.card-title) {
+		font-family: var(--font-body);
+		font-style: italic;
+		font-weight: 600;
+	}
+
+	@media (max-width: 40rem) {
+		.home {
+			padding-inline: var(--spacing-4);
+		}
+	}
+</style>

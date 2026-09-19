@@ -1,0 +1,144 @@
+---
+import type { MediaValue, ContentBylineCredit } from "emdash";
+import { Image } from "emdash/ui";
+import { bylineNames, formatDate } from "../utils/format";
+
+interface Props {
+	title: string;
+	href: string;
+	/** Red lead-in above the headline: the post's kicker, else its section name */
+	kicker?: string | null;
+	excerpt?: string | null;
+	featuredImage?: MediaValue | string | null;
+	date?: Date;
+	readingTime?: number;
+	bylines?: ContentBylineCredit[];
+	/** Tag links under the meta line. Archives and the article page pass them; the home page doesn't */
+	tags?: Array<{ slug: string; label: string }>;
+	/** Kicker, headline, and date (if given) only, for dense lists */
+	compact?: boolean;
+	/** Heading level for the headline. Archives use 2 because their page title is the only h1 */
+	level?: 2 | 3;
+	/** Load the image eagerly with high priority. Set on the first card when it is the largest paint */
+	priority?: boolean;
+}
+
+const {
+	title,
+	href,
+	kicker,
+	excerpt,
+	featuredImage,
+	date,
+	readingTime,
+	bylines,
+	tags = [],
+	compact = false,
+	level = 3,
+	priority = false,
+} = Astro.props;
+const Heading = `h${level}` as const;
+const names = bylineNames(bylines);
+---
+
+<article class:list={["post-card", { compact }]}>
+	{!compact && featuredImage && (
+		<a href={href} class="card-image" tabindex="-1" aria-hidden="true">
+			{priority ? (
+				<Image image={featuredImage} loading="eager" fetchpriority="high" />
+			) : (
+				<Image image={featuredImage} />
+			)}
+		</a>
+	)}
+	{kicker && <p class="card-kicker">{kicker}</p>}
+	<Heading class="card-title">
+		<a href={href}>{title}</a>
+	</Heading>
+	{!compact && excerpt && <p class="card-excerpt">{excerpt}</p>}
+	{((!compact && (names || readingTime)) || date) && (
+		<p class="card-meta">
+			{!compact && names && <span>By {names}</span>}
+			{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}
+			{!compact && readingTime && <span>{readingTime} min read</span>}
+		</p>
+	)}
+	{!compact && tags.length > 0 && (
+		<p class="card-tags">
+			{tags.map((t) => (
+				<a href={`/tag/${t.slug}`}>{t.label}</a>
+			))}
+		</p>
+	)}
+</article>
+
+<style>
+	.post-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1);
+	}
+
+	.card-image {
+		display: block;
+		margin-bottom: var(--spacing-3);
+		background: var(--color-surface);
+	}
+
+	.card-image :global(img) {
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+	}
+
+	.card-kicker {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		color: var(--color-brand);
+	}
+
+	.card-title {
+		font-size: var(--font-size-lg);
+		line-height: var(--leading-snug);
+		hyphens: manual;
+	}
+
+	.compact .card-title {
+		font-size: var(--font-size-base);
+	}
+
+	.card-excerpt {
+		font-size: var(--font-size-sm);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+
+	.card-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--spacing-3);
+		margin-top: var(--spacing-1);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+
+	.card-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--spacing-3);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-xs);
+	}
+
+	.card-tags a {
+		text-decoration: underline;
+		text-decoration-color: var(--color-border);
+		text-underline-offset: 0.2em;
+	}
+
+	.card-meta:empty {
+		display: none;
+	}
+</style>

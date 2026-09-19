@@ -1,0 +1,22 @@
+node_modules
+dist
+.astro
+.emdash/migrations.json
+uploads
+data.db
+
+# Environment / Wrangler secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
+# Local Workers state (D1/R2/KV)
+.wrangler
+
+# Local agent settings
+.claude/settings.local.json
+
+# Lighthouse CI reports
+.lighthouseci

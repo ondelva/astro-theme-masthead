@@ -1,0 +1,26 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../../layouts/Base.astro";
+import Archive from "../../components/Archive.astro";
+import { PAGE_CACHE } from "../../utils/cache";
+
+const PAGE_SIZE = 15;
+
+const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
+const { entries, nextCursor, cacheHint } = await getEmDashCollection("posts", {
+	orderBy: { published_at: "desc" },
+	limit: PAGE_SIZE,
+	cursor,
+});
+
+if (Astro.cache?.enabled) Astro.cache.set({ ...cacheHint, ...PAGE_CACHE });
+---
+
+<Base title="All articles" description="Every article, newest first.">
+	<Archive
+		title="All articles"
+		posts={entries}
+		nextCursor={nextCursor}
+		empty="Nothing published yet."
+	/>
+</Base>

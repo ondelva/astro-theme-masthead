@@ -1,0 +1,404 @@
+---
+import {
+	getEmDashEntry,
+	getEmDashCollection,
+	getSeoMeta,
+	decodeSlug,
+	getSiteSettings,
+} from "emdash";
+import type { ContentBylineCredit, PortableTextBlock } from "emdash";
+import { Image, PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getReadingTime } from "../../utils/reading-time";
+import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import { formatDate, mediaUrl } from "../../utils/format";
+import { PAGE_CACHE } from "../../utils/cache";
+
+const RELATED_COUNT = 3;
+
+const slug = decodeSlug(Astro.params.slug);
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
+
+if (!post) {
+	return Astro.rewrite("/404");
+}
+
+if (Astro.cache?.enabled) Astro.cache.set({ ...cacheHint, ...PAGE_CACHE });
+
+const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
+const seo = getSeoMeta(post, {
+	siteTitle,
+	siteUrl: Astro.url.origin,
+	path: Astro.url.pathname.replace(/\/$/, ""),
+	defaultOgImage: mediaUrl(post.data.featured_image, Astro.url.origin),
+});
+
+const { data } = post;
+const section = data.terms?.category?.[0];
+const tags = data.terms?.tag ?? [];
+const kicker = data.kicker || section?.label;
+const dek = data.dek || data.excerpt;
+const readingTime = getReadingTime(data.content);
+
+// Bylines: authors first ("By A and B"), then one line per role ("Additional reporting by C").
+const credits = data.bylines ?? [];
+const byRole = new Map<string, ContentBylineCredit[]>();
+for (const c of credits) {
+	const role = c.roleLabel ?? "";
+	byRole.set(role, [...(byRole.get(role) ?? []), c]);
+}
+const bylineLines = [...byRole].map(([role, group]) => ({
+	prefix: role ? `${role} by` : "By",
+	people: group.map((c) => c.byline),
+}));
+// Bios for the writers only; "Additional reporting" credits get the byline line, not a bio.
+const writers = credits.filter((c) => !c.roleLabel);
+const authors = (writers.length ? writers : credits).map((c) => c.byline).filter((b) => b.bio);
+
+// Show "Updated" only for a real edit, not the seconds between create and publish.
+const published = data.publishedAt;
+const updated =
+	published && data.updatedAt.getTime() - published.getTime() > 60 * 60 * 1000
+		? data.updatedAt
+		: null;
+
+// The dateline runs into the first paragraph, as in print. If the story opens with
+// anything else (a heading, an image), it moves up into the meta line.
+const blocks = (data.content as PortableTextBlock[] | undefined) ?? [];
+const opensWithParagraph = blocks[0]?._type === "block" && blocks[0]?.style === "normal";
+const inlineDateline = data.dateline && opensWithParagraph ? data.dateline : null;
+
+const sectionPosts = section
+	? await getEmDashCollection("posts", {
+			where: { category: section.slug },
+			orderBy: { published_at: "desc" },
+			limit: RELATED_COUNT + 1,
+		})
+	: null;
+if (Astro.cache?.enabled && sectionPosts) Astro.cache.set(sectionPosts.cacheHint);
+const related = (sectionPosts?.entries ?? [])
+	.filter((p) => p.id !== post.id)
+	.slice(0, RELATED_COUNT);
+---
+
+<Base
+	title={seo.title}
+	pageTitle={seo.ogTitle}
+	description={seo.description}
+	image={seo.ogImage}
+	canonical={seo.canonical}
+	robots={seo.robots}
+	type="article"
+	publishedTime={published?.toISOString() ?? null}
+	modifiedTime={data.updatedAt.toISOString()}
+	author={credits[0]?.byline.displayName ?? null}
+	content={{ collection: "posts", id: data.id, slug }}
+>
+	<article class="article">
+		<header class="article-head">
+			{kicker && <p class="kicker">{kicker}</p>}
+			<h1 class="article-title" {...post.edit.title}>
+				{data.title}
+			</h1>
+			{dek && <p class="dek">{dek}</p>}
+			<div class="article-meta">
+				{bylineLines.map((line) => (
+					<p class="byline">
+						{line.prefix}{" "}
+						{line.people.map((b, i) => (
+							<>
+								{i > 0 && (i === line.people.length - 1 ? " and " : ", ")}
+								<a href={`/authors/${b.slug}`}>{b.displayName}</a>
+							</>
+						))}
+					</p>
+				))}
+				<p class="dates">
+					{data.dateline && !inlineDateline && <span>{data.dateline}</span>}
+					{published && <time datetime={published.toISOString()}>{formatDate(published)}</time>}
+					{updated && (
+						<span>
+							Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+						</span>
+					)}
+					<span>{readingTime} min read</span>
+				</p>
+			</div>
+		</header>
+
+		{data.featured_image && (
+			<figure class="article-image" {...post.edit.featured_image}>
+				<Image image={data.featured_image} loading="eager" fetchpriority="high" />
+				{(data.featured_image_caption || data.featured_image_credit) && (
+					<figcaption>
+						{data.featured_image_caption}
+						{data.featured_image_credit && <span class="credit">{data.featured_image_credit}</span>}
+					</figcaption>
+				)}
+			</figure>
+		)}
+
+		<div
+			class:list={["prose", "article-body", { "has-dateline": inlineDateline }]}
+			style={inlineDateline ? `--dateline: ${JSON.stringify(`${inlineDateline} — `)}` : undefined}
+		>
+			<PortableText value={blocks} />
+		</div>
+
+		{data.correction && (
+			<aside class="correction" aria-label="Correction">
+				<p>
+					<strong>Correction:</strong> {data.correction}
+				</p>
+			</aside>
+		)}
+
+		{tags.length > 0 && (
+			<nav class="article-tags" aria-label="Tags">
+				<span>Filed under</span>
+				{tags.map((t) => (
+					<a href={`/tag/${t.slug}`}>{t.label}</a>
+				))}
+			</nav>
+		)}
+
+		{authors.length > 0 && (
+			<section
+				class="bios"
+				aria-label={authors.length === 1 ? "About the author" : "About the authors"}
+			>
+				{authors.map((b) => (
+					<div class="bio">
+						{b.avatarMediaId && (
+							<img
+								src={`/_emdash/api/media/file/${b.avatarMediaId}`}
+								alt=""
+								width="56"
+								height="56"
+								loading="lazy"
+							/>
+						)}
+						<p>
+							<a href={`/authors/${b.slug}`} class="bio-name">
+								{b.displayName}
+							</a>{" "}
+							{b.bio}
+						</p>
+					</div>
+				))}
+			</section>
+		)}
+	</article>
+
+	{section && related.length > 0 && (
+		<section class="related" aria-labelledby="related-head">
+			<header class="section-head">
+				<h2 id="related-head">
+					<a href={`/category/${section.slug}`}>{section.label}</a>
+				</h2>
+				<a href={`/category/${section.slug}`} class="more">
+					More in {section.label}
+				</a>
+			</header>
+			<div class="rule-grid" style={`--grid: repeat(${related.length}, minmax(0, 1fr))`}>
+				<ul>
+					{related.map((p) => (
+						<li>
+							<PostCard
+								title={p.data.title}
+								href={`/posts/${p.id}`}
+								kicker={p.data.kicker}
+								excerpt={p.data.excerpt}
+								featuredImage={p.data.featured_image}
+								bylines={p.data.bylines}
+								tags={p.data.terms?.tag}
+							/>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	)}
+</Base>
+
+<style>
+	.article {
+		max-width: calc(var(--content-width) + 2 * var(--spacing-6));
+		margin-inline: auto;
+		padding: var(--spacing-10) var(--spacing-6) var(--spacing-12);
+	}
+
+	.article-head {
+		display: grid;
+		gap: var(--spacing-3);
+	}
+
+	.kicker {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		color: var(--color-brand);
+	}
+
+	.article-title {
+		font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+		hyphens: manual;
+		text-wrap: balance;
+	}
+
+	.dek {
+		hyphens: manual;
+		font-size: var(--font-size-xl);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+	}
+
+	.article-meta {
+		margin-top: var(--spacing-2);
+		padding-top: var(--spacing-3);
+		border-top: var(--rule-strong);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+	}
+
+	.byline {
+		font-weight: 600;
+	}
+
+	.byline + .byline {
+		font-weight: 400;
+		color: var(--color-text-secondary);
+	}
+
+	.dates {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--spacing-3);
+		margin-top: var(--spacing-1);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+
+	.article-image {
+		margin-block: var(--spacing-8);
+	}
+
+	.article-image :global(img) {
+		width: 100%;
+		background: var(--color-surface);
+	}
+
+	figcaption {
+		margin-top: var(--spacing-2);
+		padding-bottom: var(--spacing-2);
+		border-bottom: var(--rule-hair);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-xs);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+
+	.credit {
+		margin-inline-start: var(--spacing-2);
+		color: var(--color-muted);
+	}
+
+	.article-head + .article-body {
+		margin-top: var(--spacing-8);
+	}
+
+	/* Print dateline: "PORT ALDEN — " set into the first paragraph. */
+	.has-dateline > :global(p:first-child)::before {
+		content: var(--dateline);
+		font-family: var(--font-ui);
+		font-size: 0.8em;
+		font-weight: 700;
+	}
+
+	.correction {
+		margin-top: var(--spacing-8);
+		padding: var(--spacing-3) 0;
+		border-block: var(--rule-strong);
+		font-size: var(--font-size-base);
+		font-style: italic;
+	}
+
+	.correction strong {
+		font-family: var(--font-ui);
+		font-style: normal;
+		color: var(--color-brand);
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-1) var(--spacing-3);
+		margin-top: var(--spacing-8);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+	}
+
+	.article-tags span {
+		color: var(--color-muted);
+	}
+
+	.article-tags a {
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+		text-underline-offset: 0.2em;
+	}
+
+	.bios {
+		margin-top: var(--spacing-8);
+		border-top: var(--rule-hair);
+	}
+
+	.bio {
+		display: flex;
+		gap: var(--spacing-4);
+		align-items: start;
+		padding-top: var(--spacing-4);
+		font-size: var(--font-size-sm);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+
+	.bio img {
+		flex: none;
+		width: 56px;
+		height: 56px;
+		object-fit: cover;
+		filter: grayscale(1);
+	}
+
+	.bio-name {
+		font-family: var(--font-ui);
+		font-weight: 700;
+		color: var(--color-text);
+	}
+
+	.related {
+		display: grid;
+		gap: var(--spacing-2);
+		max-width: var(--wide-width);
+		margin-inline: auto;
+		padding: 0 var(--spacing-6);
+	}
+
+	@media (max-width: 40rem) {
+		.article,
+		.related {
+			padding-inline: var(--spacing-4);
+		}
+
+		.article {
+			padding-top: var(--spacing-6);
+		}
+	}
+</style>

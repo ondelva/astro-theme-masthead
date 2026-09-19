@@ -1,0 +1,188 @@
+---
+import type { getEmDashCollection } from "emdash";
+import PostCard from "./PostCard.astro";
+
+type Post = Awaited<ReturnType<typeof getEmDashCollection<"posts">>>["entries"][number];
+
+interface Props {
+	title: string;
+	/** Short line above the title, e.g. "Tag" */
+	eyebrow?: string;
+	description?: string | null;
+	posts: Post[];
+	/** From getEmDashCollection; links to the next page when set */
+	nextCursor?: string;
+	/** First page of a section front: the newest story runs larger across two columns */
+	lead?: boolean;
+	/** On a section page every post is in that section, so the kicker doesn't fall back to it */
+	sectionKicker?: boolean;
+	/** The tag this page lists, left out of each card's tag line */
+	omitTag?: string;
+	empty?: string;
+}
+
+const {
+	title,
+	eyebrow,
+	description,
+	posts,
+	nextCursor,
+	lead = false,
+	sectionKicker = true,
+	omitTag,
+	empty = "Nothing here yet.",
+} = Astro.props;
+const cursor = Astro.url.searchParams.get("cursor");
+const kickerOf = (p: Post) =>
+	p.data.kicker || (sectionKicker ? p.data.terms?.category?.[0]?.label : undefined);
+---
+
+<div class="archive">
+	<header class="archive-head">
+		{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+		<h1>{title}</h1>
+		{description && <p class="description">{description}</p>}
+		<slot name="head" />
+	</header>
+
+	{posts.length === 0 ? (
+		<p class="empty">{empty}</p>
+	) : (
+		<div class="rule-grid">
+			<ul>
+				{posts.map((p, i) => (
+					<li class:list={{ lead: lead && i === 0 }}>
+						<PostCard
+							title={p.data.title}
+							href={`/posts/${p.id}`}
+							kicker={kickerOf(p)}
+							excerpt={p.data.excerpt}
+							featuredImage={p.data.featured_image}
+							date={p.data.publishedAt ?? undefined}
+							bylines={p.data.bylines}
+							tags={p.data.terms?.tag?.filter((t) => t.slug !== omitTag)}
+							level={2}
+							priority={i === 0}
+						/>
+					</li>
+				))}
+			</ul>
+		</div>
+	)}
+
+	{(nextCursor || cursor) && (
+		<nav class="pager" aria-label="Pages">
+			{cursor && <a href={Astro.url.pathname}>Newest</a>}
+			{nextCursor && (
+				<a href={`${Astro.url.pathname}?cursor=${encodeURIComponent(nextCursor)}`} rel="next">
+					Older articles
+				</a>
+			)}
+		</nav>
+	)}
+</div>
+
+<style>
+	.archive {
+		max-width: var(--wide-width);
+		margin-inline: auto;
+		padding: var(--spacing-8) var(--spacing-6) 0;
+	}
+
+	.archive-head {
+		display: grid;
+		gap: var(--spacing-2);
+		padding-bottom: var(--spacing-4);
+		border-bottom: var(--rule-heavy);
+	}
+
+	.eyebrow {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		color: var(--color-brand);
+	}
+
+	/* Section fronts reuse the nameplate's Caslon. */
+	h1 {
+		font-family: var(--font-display);
+		font-size: clamp(var(--font-size-4xl), 7vw, var(--font-size-5xl));
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: 0;
+		hyphens: manual;
+	}
+
+	.description {
+		max-width: var(--content-width);
+		color: var(--color-text-secondary);
+	}
+
+	.rule-grid {
+		--grid: repeat(3, minmax(0, 1fr));
+	}
+
+	@media (min-width: 36rem) {
+		.lead {
+			grid-column: span 2;
+		}
+	}
+
+	/* Wide screens: the lead photo sits beside its headline, so the row stays short. */
+	@media (min-width: 60rem) {
+		.lead :global(.post-card) {
+			display: grid;
+			grid-template-columns: 58% minmax(0, 1fr);
+			grid-template-rows: repeat(5, auto) 1fr;
+			column-gap: var(--spacing-6);
+			align-content: start;
+		}
+
+		.lead :global(.post-card > *) {
+			grid-column: 2;
+		}
+
+		.lead :global(.card-image) {
+			grid-column: 1;
+			grid-row: 1 / -1;
+			align-self: start;
+			margin: 0;
+		}
+	}
+
+	.lead :global(.card-title) {
+		font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-3xl));
+		font-weight: var(--font-weight-display);
+		letter-spacing: var(--tracking-tight);
+	}
+
+	.lead :global(.card-excerpt) {
+		font-size: var(--font-size-base);
+	}
+
+	.empty {
+		padding-block: var(--spacing-8);
+		color: var(--color-text-secondary);
+	}
+
+	.pager {
+		display: flex;
+		justify-content: space-between;
+		margin-top: var(--spacing-4);
+		padding-top: var(--spacing-3);
+		border-top: var(--rule-strong);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+	}
+
+	.pager a[rel="next"] {
+		margin-inline-start: auto;
+	}
+
+	@media (max-width: 40rem) {
+		.archive {
+			padding-inline: var(--spacing-4);
+		}
+	}
+</style>

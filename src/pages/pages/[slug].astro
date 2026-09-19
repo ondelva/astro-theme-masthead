@@ -1,0 +1,60 @@
+---
+import { getEmDashEntry, decodeSlug } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import { extractText } from "../../utils/reading-time";
+import { PAGE_CACHE } from "../../utils/cache";
+
+const slug = decodeSlug(Astro.params.slug);
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+
+if (!page) {
+	return Astro.rewrite("/404");
+}
+
+if (Astro.cache?.enabled) Astro.cache.set({ ...cacheHint, ...PAGE_CACHE });
+
+// Pages have no excerpt field, so the meta description is the opening text.
+const text = extractText(page.data.content);
+const description = text.length > 160 ? `${text.slice(0, 157).replace(/\s+\S*$/, "")}…` : text;
+---
+
+<Base
+	title={page.data.title}
+	description={description || undefined}
+	content={{ collection: "pages", id: page.data.id, slug }}
+>
+	<article class="page">
+		<h1 {...page.edit.title}>{page.data.title}</h1>
+		<div class="prose">
+			<PortableText value={page.data.content} />
+		</div>
+	</article>
+</Base>
+
+<style>
+	.page {
+		max-width: calc(var(--content-width) + 2 * var(--spacing-6));
+		margin-inline: auto;
+		padding: var(--spacing-10) var(--spacing-6) var(--spacing-16);
+	}
+
+	h1 {
+		font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+		padding-bottom: var(--spacing-4);
+		margin-bottom: var(--spacing-8);
+		border-bottom: var(--rule-heavy);
+		hyphens: manual;
+	}
+
+	@media (max-width: 40rem) {
+		.page {
+			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
+		}
+	}
+</style>

@@ -1,0 +1,158 @@
+---
+export const prerender = false;
+
+import { search } from "emdash";
+import Base from "../layouts/Base.astro";
+
+const query = Astro.url.searchParams.get("q")?.trim() || "";
+
+// FTS-backed search: ranked, stemmed, and doesn't load every post into memory.
+const { items: results } = query
+	? await search(query, { collections: ["posts", "pages"], limit: 30 })
+	: { items: [] };
+
+const hrefOf = (r: (typeof results)[number]) =>
+	`/${r.collection === "pages" ? "pages" : "posts"}/${r.slug ?? r.id}`;
+---
+
+<Base
+	title={query ? `Search: ${query}` : "Search"}
+	description="Search the archive"
+	robots="noindex"
+>
+	<div class="search">
+		<header class="search-head">
+			<h1>Search</h1>
+			<form method="get" action="/search" role="search">
+				<label for="q" class="visually-hidden">
+					Search articles and pages
+				</label>
+				<input
+					id="q"
+					type="search"
+					name="q"
+					value={query}
+					placeholder="Seawall, ferry, Harbor Days"
+				/>
+				<button type="submit">Search</button>
+			</form>
+		</header>
+
+		{query && (
+			<p class="summary" role="status">
+				{results.length === 0
+					? `Nothing matched “${query}”. Try a shorter word or a street name.`
+					: `${results.length} result${results.length === 1 ? "" : "s"} for “${query}”`}
+			</p>
+		)}
+
+		{results.length > 0 && (
+			<ol class="results">
+				{results.map((r) => (
+					<li>
+						<h2>
+							<a href={hrefOf(r)}>{r.title ?? "Untitled"}</a>
+						</h2>
+						{r.snippet && <p class="snippet" set:html={r.snippet} />}
+					</li>
+				))}
+			</ol>
+		)}
+	</div>
+</Base>
+
+<style>
+	.search {
+		max-width: calc(var(--content-width) + 2 * var(--spacing-6));
+		margin-inline: auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+
+	.search-head {
+		display: grid;
+		gap: var(--spacing-4);
+		padding-bottom: var(--spacing-4);
+		border-bottom: var(--rule-heavy);
+	}
+
+	h1 {
+		font-family: var(--font-display);
+		font-size: clamp(var(--font-size-4xl), 7vw, var(--font-size-5xl));
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: 0;
+	}
+
+	form {
+		display: flex;
+		gap: var(--spacing-2);
+	}
+
+	input,
+	button {
+		font-family: var(--font-ui);
+		font-size: var(--font-size-base);
+		padding: var(--spacing-2) var(--spacing-3);
+		border: 1px solid var(--color-text);
+		border-radius: 0;
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	input {
+		flex: 1;
+		min-width: 0;
+	}
+
+	button {
+		font-weight: 700;
+		background: var(--color-text);
+		color: var(--color-bg);
+		cursor: pointer;
+	}
+
+	.summary {
+		padding-block: var(--spacing-4);
+		font-family: var(--font-ui);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+	}
+
+	.results {
+		list-style: none;
+	}
+
+	.results li {
+		padding-block: var(--spacing-4);
+		border-top: var(--rule-hair);
+	}
+
+	.results h2 {
+		font-size: var(--font-size-lg);
+		line-height: var(--leading-snug);
+		hyphens: manual;
+	}
+
+	.snippet {
+		margin-top: var(--spacing-1);
+		font-size: var(--font-size-sm);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+
+	/* FTS wraps matched terms in <mark>: ink on a red underline, not a highlighter. */
+	.snippet :global(mark) {
+		background: none;
+		color: var(--color-text);
+		font-weight: 600;
+		text-decoration: underline;
+		text-decoration-color: var(--color-brand);
+		text-decoration-thickness: 2px;
+	}
+
+	@media (max-width: 40rem) {
+		.search {
+			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
+		}
+	}
+</style>

@@ -1,0 +1,28 @@
+/*
+  theme.css -- your theme overrides. This is the file to edit to
+  retheme the site.
+
+  Every design token lives in src/styles/tokens.css (colors, type
+  scale, spacing, layout, shadows) with its default value. Override any
+  of them here: declarations in this file are unlayered, so they always
+  beat the @layer base defaults in tokens.css.
+
+  Colors are defined with light-dark(). Overriding with a plain color
+  changes light and dark mode at once; use light-dark(<light>, <dark>)
+  to set different values per mode.
+
+  Webfonts are loaded in astro.config.mjs (--font-body, --font-heading,
+  --font-display). Swap a loaded font there; use overrides here for
+  system fonts.
+
+  Example:
+
+  :root {
+    --color-brand: light-dark(#1f4e8c, #7aa7e0);
+    --font-body: Charter, "Iowan Old Style", Georgia, serif;
+    --rule-heavy: 2px solid var(--color-rule-strong);
+  }
+*/
+
+:root {
+}

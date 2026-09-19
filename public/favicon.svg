@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+	<style>
+		.paper { fill: #f7f5f0; }
+		.ink { fill: #191713; }
+		@media (prefers-color-scheme: dark) {
+			.paper { fill: #191713; }
+			.ink { fill: #ede9e1; }
+		}
+	</style>
+	<rect class="paper" width="32" height="32" />
+	<text class="ink" x="16" y="23" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700">M</text>
+	<rect x="4" y="27" width="24" height="2" fill="#c8102e" />
+</svg>

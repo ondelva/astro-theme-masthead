@@ -1,0 +1,8 @@
+dist/
+.astro/
+.wrangler/
+pnpm-lock.yaml
+emdash-env.d.ts
+worker-configuration.d.ts
+seed/seed.json
+.agents/
