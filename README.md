@@ -22,11 +22,13 @@ The admin demo signs you in as a contributor: you can write drafts and upload me
 ## Quick start
 
 ```sh
-npm create emdash@latest my-site -- --template github:ondelva/astro-theme-masthead --pm pnpm
+pnpm create astro@latest my-site --template ondelva/astro-theme-masthead
 cd my-site
+npx emdash secrets generate --write .env
 pnpm dev
 ```
 
+The `secrets` line creates `EMDASH_ENCRYPTION_KEY` in `.env` (see [docs/deploy.md](docs/deploy.md#secrets)). `git clone` works too.
 Open `http://localhost:4321/_emdash/admin` and finish setup. The sample content is applied on first setup.
 
 ## Configure

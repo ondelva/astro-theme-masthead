@@ -26,7 +26,7 @@ A freshly deployed site has a public, unauthenticated `/_emdash/api/setup` until
 
 ## Secrets
 
-`EMDASH_ENCRYPTION_KEY` (generated into your local `.env` on scaffold) must be set as a Workers secret in production: `wrangler secret put EMDASH_ENCRYPTION_KEY`. Never commit it.
+`EMDASH_ENCRYPTION_KEY` (in your local `.env`; create it with `npx emdash secrets generate --write .env`) must be set as a Workers secret in production: `wrangler secret put EMDASH_ENCRYPTION_KEY`. Never commit it.
 
 ## CI
 
