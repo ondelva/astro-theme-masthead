@@ -54,11 +54,14 @@ pnpm dev
 
 ## Deploy
 
-Create the R2 bucket first (`wrangler r2 bucket create masthead-media`); `wrangler deploy` does not create it.
-
 ```sh
-pnpm deploy
+npx wrangler r2 bucket create masthead-media               # wrangler deploy creates D1 and KV, not R2
+EMDASH_SITE_URL=https://your-site.example pnpm deploy      # the URL is read at build time
+npx wrangler secret put EMDASH_ENCRYPTION_KEY              # paste the value from .env
 ```
+
+`EMDASH_SITE_URL` lets Astro resize images and build absolute links; without it images are served full size.
+Not sure of the URL yet? Deploy once, then deploy again with the `workers.dev` address it prints.
 
 Finish setup immediately after the first deploy: until an admin account exists, the setup page is public.
 See [docs/deploy.md](docs/deploy.md).
