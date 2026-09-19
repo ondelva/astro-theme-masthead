@@ -5,7 +5,7 @@ Masthead is server-rendered and runs on Cloudflare Workers, backed by D1 (databa
 ## Requirements
 
 - A Cloudflare account on the **Workers Paid** plan. The bundle is over the 3 MiB Workers free-plan limit.
-- Node.js 22.12 or later, pnpm 11.
+- Node.js 22.12 or later, pnpm 9 or newer. `packageManager` in `package.json` pins the exact version, and pnpm 10+ switches to it.
 - Tested with emdash 0.38.x. Dependencies are pinned to exact versions; EmDash is in beta and ships weekly, so don't bump them casually.
 
 ## Before you deploy

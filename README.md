@@ -39,7 +39,7 @@ See [docs/customization.md](docs/customization.md).
 
 ## Requirements
 
-- Node.js 22.12 or later, pnpm 11
+- Node.js 22.12 or later, pnpm 9 or newer (`packageManager` pins the exact version; pnpm 10+ switches to it)
 - Cloudflare **Workers Paid** plan (the bundle is over the 3 MiB free-plan limit)
 - Tested with emdash 0.38.x. Dependencies are pinned to exact versions; EmDash is in beta and ships weekly.
 
