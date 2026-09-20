@@ -38,8 +38,13 @@ jobs:
       - run: pnpm exec astro preview --background
       # Thresholds (mobile 95+) live in lighthouserc.json
       - run: pnpm dlx @lhci/cli@0.15.1 autorun
-      # Internal links only; external links and the admin are skipped
-      - run: pnpm dlx linkinator@8.1.0 http://localhost:4321/ --recurse --skip '^https?://(?!(localhost|127\.0\.0\.1|\[::1\])[:/])' --skip '/_emdash/'
+      # Internal links only; external links and the admin are skipped.
+      # A loaded runner makes the preview server drop requests, so keep the crawl
+      # narrow and retry 5xx -- a page that is really broken still fails every try
+      - run: pnpm dlx linkinator@8.1.0 http://localhost:4321/ --recurse --concurrency 10 --retry-errors --retry-errors-count 3 --skip '^https?://(?!(localhost|127\.0\.0\.1|\[::1\])[:/])' --skip '/_emdash/'
+      # The preview server is where those 5xx come from, so keep its log with the report
+      - if: failure()
+        run: pnpm exec astro preview logs > preview.log 2>&1 || true
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -47,4 +52,5 @@ jobs:
           path: |
             .lighthouseci
             dev.log
+            preview.log
           if-no-files-found: ignore
