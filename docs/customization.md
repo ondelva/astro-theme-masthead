@@ -19,6 +19,12 @@ After any color change, run `pnpm check:contrast` — it checks every text token
 
 Declared under `fonts:` in `astro.config.mjs`, bound to `--font-body`, `--font-heading`, and `--font-display` CSS variables. All three are served from Fontsource (no external font CDN links). Swapping a font is a matter of changing the `name` and matching CSS variable in `theme.css`; check licensing before adding a non-OFL font (see `THIRD-PARTY-NOTICES.md`).
 
+## Footer credit
+
+The footer carries one line crediting the theme: `Masthead theme by Ondelva`, linking to the
+theme repository. It is a plain link in `src/layouts/Base.astro` — delete it if you would rather not have it.
+Keeping it is how other people find the theme. Masthead Pro ships without it.
+
 ## Publication line (Vol./No. and date)
 
 `src/utils/edition.ts`, the `FOUNDED` constant — set it to your first issue date. The footer line ("Friday, September 18, 2026 · Vol. 1, No. 257") computes the volume (turns over every year since `FOUNDED`) and issue number (one per day since `FOUNDED`, the way daily papers count) from that single date, in UTC.

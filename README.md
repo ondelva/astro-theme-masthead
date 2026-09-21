@@ -70,15 +70,16 @@ See [docs/deploy.md](docs/deploy.md).
 
 This is the free, MIT-licensed edition. Masthead Pro is built on the same code and adds the following ([Pro demo](https://masthead.ondelva.com)):
 
-|            | Free                                                   | Pro                                                    |
-| ---------- | ------------------------------------------------------ | ------------------------------------------------------ |
-| Pages      | Home, articles, sections, tags, authors, search, legal | + Podcast, page layouts (Cover, Sign-up)               |
-| Podcast    | –                                                      | Episodes, player, Apple/Spotify-ready RSS feed         |
-| Membership | –                                                      | Email-link sign-in, members-only articles and episodes |
-| Forms      | –                                                      | Newsletter and corrections forms                       |
-| Front page | Lead, top stories, section columns set in the admin    | + Podcast strip                                        |
-| OG images  | –                                                      | Generated per article                                  |
-| Support    | GitHub Issues                                          | Email (im@ondelva.com), 2 business days                |
+|               | Free                                                   | Pro                                                    |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------ |
+| Pages         | Home, articles, sections, tags, authors, search, legal | + Podcast, page layouts (Cover, Sign-up)               |
+| Podcast       | –                                                      | Episodes, player, Apple/Spotify-ready RSS feed         |
+| Membership    | –                                                      | Email-link sign-in, members-only articles and episodes |
+| Forms         | –                                                      | Newsletter and corrections forms                       |
+| Front page    | Lead, top stories, section columns set in the admin    | + Podcast strip                                        |
+| OG images     | –                                                      | Generated per article                                  |
+| Footer credit | One line, easy to remove                               | None                                                   |
+| Support       | GitHub Issues                                          | Email (im@ondelva.com), 2 business days                |
 
 [See the Pro demo →](https://masthead.ondelva.com) · [Get Pro →](https://buy.polar.sh/polar_cl_5QWr1VFC0mYPuUIObySlgyfGa3MYodyZaI3AU0xmwI4)
 
