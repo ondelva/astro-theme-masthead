@@ -53,4 +53,7 @@ jobs:
             .lighthouseci
             dev.log
             preview.log
-          if-no-files-found: ignore
+          # .lighthouseci is a dotted directory, and upload-artifact skips hidden files
+          # by default -- without this the two logs upload and the report silently does not.
+          include-hidden-files: true
+          if-no-files-found: warn
