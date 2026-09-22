@@ -21,7 +21,7 @@ Declared under `fonts:` in `astro.config.mjs`, bound to `--font-body`, `--font-h
 
 ## Footer credit
 
-The footer carries one line crediting the theme: `Masthead theme by Ondelva`, linking to the
+The footer carries one line crediting the theme: `Masthead theme by ondelva`, linking to the
 theme repository. It is a plain link in `src/layouts/Base.astro` — delete it if you would rather not have it.
 Keeping it is how other people find the theme. Masthead Pro ships without it.
 

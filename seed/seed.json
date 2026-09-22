@@ -4,7 +4,7 @@
 	"meta": {
 		"name": "Masthead",
 		"description": "A newspaper-style news magazine with sections, many authors",
-		"author": "Ondelva"
+		"author": "ondelva"
 	},
 	"settings": {
 		"title": "The Alden Ledger",
@@ -352,7 +352,7 @@
 		{
 			"slug": "newsletter-signup",
 			"title": "Newsletter signup",
-			"description": "A short invitation to the morning newsletter",
+			"description": "An invitation to the morning newsletter, with the signup form",
 			"keywords": [
 				"newsletter",
 				"subscribe",
@@ -573,7 +573,7 @@
 								{
 									"_type": "span",
 									"_key": "b5s1",
-									"text": "To flag a possible error, write to the reporter or editor whose name is on the story, or to the editor in chief at the address on our contact page. Include the article's headline and the specific fact in question. We read every message and reply to most within a few days.",
+									"text": "To flag a possible error, write to the reporter or editor whose name is on the story. Include the article's headline and the specific fact in question. We read every message and reply to most within a few days.",
 									"marks": []
 								}
 							],
