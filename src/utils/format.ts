@@ -1,7 +1,8 @@
 import type { ContentBylineCredit } from "emdash";
+import { locale } from "./ui";
 
 export function formatDate(date: Date | null | undefined) {
-	return date?.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+	return date?.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
 }
 
 /**
@@ -11,7 +12,7 @@ export function formatDate(date: Date | null | undefined) {
 export function bylineNames(credits: ContentBylineCredit[] | undefined) {
 	const authors = credits?.filter((c) => !c.roleLabel) ?? [];
 	const names = (authors.length ? authors : (credits ?? [])).map((c) => c.byline.displayName);
-	return names.length ? new Intl.ListFormat("en").format(names) : undefined;
+	return names.length ? new Intl.ListFormat(locale).format(names) : undefined;
 }
 
 /**

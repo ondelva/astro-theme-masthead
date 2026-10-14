@@ -6,6 +6,7 @@ import LiveSearch from "emdash/ui/search";
 import { Font } from "astro:assets";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import { getEdition } from "../utils/edition";
+import { locale, ui } from "../utils/ui";
 import "../styles/tokens.css";
 import "../styles/theme.css";
 
@@ -82,7 +83,7 @@ const pageCtx = createPublicPageContext({
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -108,7 +109,7 @@ const pageCtx = createPublicPageContext({
 	<body>
 		<EmDashBodyStart page={pageCtx} />
 		<a href="#main" class="skip-link">
-			Skip to content
+			{ui.skipToContent}
 		</a>
 		<header class:list={["site-header", { "is-home": home }]}>
 			<div class="bar">
@@ -124,7 +125,7 @@ const pageCtx = createPublicPageContext({
 					</a>
 				)}
 				{menu && menu.items.length > 0 && (
-					<nav class="nav-links" aria-label="Primary">
+					<nav class="nav-links" aria-label={ui.nav.primary}>
 						{menu.items.map((item) => (
 							<a
 								href={item.url}
@@ -137,7 +138,7 @@ const pageCtx = createPublicPageContext({
 					</nav>
 				)}
 				<LiveSearch
-					placeholder="Search"
+					placeholder={ui.searchPlaceholder}
 					class="site-search"
 					inputClass="site-search-input"
 					resultsClass="site-search-results"
@@ -155,15 +156,13 @@ const pageCtx = createPublicPageContext({
 						)}
 					</h1>
 					<p class="edition">
-						<span>
-							Vol. {edition.volume}, No. {edition.number}
-						</span>
+						<span>{ui.edition(edition.volume, edition.number)}</span>
 						{siteTagline && <span>{siteTagline}</span>}
 					</p>
 				</div>
 			)}
 			{sectionItems.length > 0 && (
-				<nav class="section-strip" aria-label="Sections">
+				<nav class="section-strip" aria-label={ui.nav.sections}>
 					{sectionItems.map((item) => (
 						<a
 							href={item.url}
@@ -188,7 +187,7 @@ const pageCtx = createPublicPageContext({
 						{siteTitle}
 					</a>
 					{footerMenu && footerMenu.items.length > 0 && (
-						<nav class="footer-links" aria-label="Footer">
+						<nav class="footer-links" aria-label={ui.nav.footer}>
 							{footerMenu.items.map((item) => (
 								<a href={item.url} target={item.target}>
 									{item.label}
@@ -197,7 +196,7 @@ const pageCtx = createPublicPageContext({
 						</nav>
 					)}
 					{socialMenu && socialMenu.items.length > 0 && (
-						<nav class="footer-links" aria-label="Social">
+						<nav class="footer-links" aria-label={ui.nav.social}>
 							{socialMenu.items.map((item) => (
 								<a
 									href={item.url}
@@ -212,12 +211,12 @@ const pageCtx = createPublicPageContext({
 				</div>
 				<div class="footer-bottom">
 					<p class="colophon">
-						{siteTitle} · {edition.date} · Vol. {edition.volume}, No. {edition.number} · Published
-						with <a href="https://emdashcms.com">EmDash</a> ·{" "}
+						{siteTitle} · {edition.date} · {ui.edition(edition.volume, edition.number)} ·{" "}
+						{ui.publishedWith} <a href="https://emdashcms.com">EmDash</a> ·{" "}
 						<a href="https://github.com/ondelva/astro-theme-masthead">Masthead</a> theme by ondelva
 					</p>
-					<div class="theme-switcher" role="group" aria-label="Color scheme">
-						<button type="button" class="theme-btn" data-theme="light" aria-label="Light mode">
+					<div class="theme-switcher" role="group" aria-label={ui.theme.label}>
+						<button type="button" class="theme-btn" data-theme="light" aria-label={ui.theme.light}>
 							<svg
 								width="16"
 								height="16"
@@ -240,7 +239,7 @@ const pageCtx = createPublicPageContext({
 								<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
 							</svg>
 						</button>
-						<button type="button" class="theme-btn" data-theme="dark" aria-label="Dark mode">
+						<button type="button" class="theme-btn" data-theme="dark" aria-label={ui.theme.dark}>
 							<svg
 								width="16"
 								height="16"
@@ -255,7 +254,12 @@ const pageCtx = createPublicPageContext({
 								<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
 							</svg>
 						</button>
-						<button type="button" class="theme-btn" data-theme="system" aria-label="System theme">
+						<button
+							type="button"
+							class="theme-btn"
+							data-theme="system"
+							aria-label={ui.theme.system}
+						>
 							<svg
 								width="16"
 								height="16"

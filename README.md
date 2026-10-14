@@ -35,6 +35,7 @@ Open `http://localhost:4321/_emdash/admin` and finish setup. The sample content 
 
 Site title, tagline, logo, menus, and authors are edited in the admin UI, not in code.
 Colors and fonts: override tokens in `src/styles/theme.css`; webfonts are set under `fonts:` in `astro.config.mjs`.
+Every word the theme prints, and the language: `src/utils/ui.ts`.
 See [docs/customization.md](docs/customization.md).
 
 ## Requirements

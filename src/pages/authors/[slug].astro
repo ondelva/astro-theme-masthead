@@ -3,6 +3,7 @@ import { getBylineBySlug, getEmDashCollection, decodeSlug } from "emdash";
 import Base from "../../layouts/Base.astro";
 import Archive from "../../components/Archive.astro";
 import { PAGE_CACHE } from "../../utils/cache";
+import { ui } from "../../utils/ui";
 
 const slug = decodeSlug(Astro.params.slug);
 const byline = slug ? await getBylineBySlug(slug) : null;
@@ -25,11 +26,11 @@ const posts = entries.filter((p) => p.data.bylines?.some((c) => c.byline.id === 
 
 <Base title={byline.displayName} description={byline.bio}>
 	<Archive
-		eyebrow={byline.isGuest ? "Contributor" : "Staff"}
+		eyebrow={byline.isGuest ? ui.author.contributor : ui.author.staff}
 		title={byline.displayName}
 		description={byline.bio}
 		posts={posts}
-		empty={`No stories by ${byline.displayName} yet.`}
+		empty={ui.author.empty(byline.displayName)}
 	>
 		{(byline.avatarMediaId || byline.websiteUrl) && (
 			<div slot="head" class="author-extra">

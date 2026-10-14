@@ -1,21 +1,21 @@
 ---
 import Base from "../layouts/Base.astro";
+import { ui } from "../utils/ui";
+
+const t = ui.notFound;
 ---
 
-<Base title="Page not found" robots="noindex">
+<Base title={t.title} robots="noindex">
 	<div class="not-found">
 		<p class="kicker">404</p>
-		<h1>This page didn't make the paper</h1>
-		<p>
-			The link may be old, or the story may have moved. Try the <a href="/">front page</a>, the{" "}
-			<a href="/posts">full archive</a>, or search for it.
-		</p>
+		<h1>{t.heading}</h1>
+		<p set:html={t.text} />
 		<form method="get" action="/search" role="search">
 			<label for="nf-q" class="visually-hidden">
-				Search articles
+				{t.label}
 			</label>
-			<input id="nf-q" type="search" name="q" placeholder="Search articles" />
-			<button type="submit">Search</button>
+			<input id="nf-q" type="search" name="q" placeholder={t.placeholder} />
+			<button type="submit">{t.button}</button>
 		</form>
 	</div>
 </Base>

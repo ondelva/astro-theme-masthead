@@ -3,6 +3,7 @@ import { getTerm, getEmDashCollection, decodeSlug } from "emdash";
 import Base from "../../layouts/Base.astro";
 import Archive from "../../components/Archive.astro";
 import { PAGE_CACHE } from "../../utils/cache";
+import { ui } from "../../utils/ui";
 
 const PAGE_SIZE = 15;
 
@@ -25,13 +26,13 @@ const { entries, nextCursor, cacheHint } = await getEmDashCollection("posts", {
 if (Astro.cache?.enabled) Astro.cache.set({ ...cacheHint, ...PAGE_CACHE });
 ---
 
-<Base title={term.label} description={`${term.label} coverage, newest first.`}>
+<Base title={term.label} description={ui.category.description(term.label)}>
 	<Archive
 		title={term.label}
 		posts={entries}
 		nextCursor={nextCursor}
 		lead={!cursor}
 		sectionKicker={false}
-		empty={`No ${term.label} stories yet.`}
+		empty={ui.category.empty(term.label)}
 	/>
 </Base>

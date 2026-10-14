@@ -1,6 +1,7 @@
 ---
 import type { getEmDashCollection } from "emdash";
 import PostCard from "./PostCard.astro";
+import { ui } from "../utils/ui";
 
 type Post = Awaited<ReturnType<typeof getEmDashCollection<"posts">>>["entries"][number];
 
@@ -30,7 +31,7 @@ const {
 	lead = false,
 	sectionKicker = true,
 	omitTag,
-	empty = "Nothing here yet.",
+	empty = ui.archive.empty,
 } = Astro.props;
 const cursor = Astro.url.searchParams.get("cursor");
 const kickerOf = (p: Post) =>
@@ -71,11 +72,11 @@ const kickerOf = (p: Post) =>
 	)}
 
 	{(nextCursor || cursor) && (
-		<nav class="pager" aria-label="Pages">
-			{cursor && <a href={Astro.url.pathname}>Newest</a>}
+		<nav class="pager" aria-label={ui.archive.pages}>
+			{cursor && <a href={Astro.url.pathname}>{ui.archive.newest}</a>}
 			{nextCursor && (
 				<a href={`${Astro.url.pathname}?cursor=${encodeURIComponent(nextCursor)}`} rel="next">
-					Older articles
+					{ui.archive.older}
 				</a>
 			)}
 		</nav>

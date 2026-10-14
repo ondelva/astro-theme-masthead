@@ -8,6 +8,7 @@ import { extractText, getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import { bylineNames } from "../utils/format";
 import { PAGE_CACHE } from "../utils/cache";
+import { ui } from "../utils/ui";
 
 /** The section shown as its own column near the bottom instead of a section block. */
 const OPINION = "opinion";
@@ -35,7 +36,7 @@ const sectionItems = (sectionsMenu?.items ?? []).flatMap((item) => {
 	return slug ? [{ slug, label: item.label, url: item.url }] : [];
 });
 if (!sectionItems.some((s) => s.slug === OPINION)) {
-	sectionItems.push({ slug: OPINION, label: "Opinion", url: `/category/${OPINION}` });
+	sectionItems.push({ slug: OPINION, label: ui.home.opinion, url: `/category/${OPINION}` });
 }
 const sectionResults = await Promise.all(
 	sectionItems.map((s) =>
@@ -102,17 +103,14 @@ const leadParagraph = leadPost
 <Base title={siteTitle} description={siteTagline} home>
 	{!leadPost ? (
 		<section class="home empty">
-			<h2>Nothing published yet</h2>
-			<p>
-				Write the first article in the <a href="/_emdash/admin/content/posts/new">admin</a>. It will
-				lead this page until you mark another one as the lead.
-			</p>
+			<h2>{ui.home.empty}</h2>
+			<p set:html={ui.home.emptyText} />
 		</section>
 	) : (
 		<div class="home">
 			<section
 				class="rule-grid front"
-				aria-label="Front page"
+				aria-label={ui.home.front}
 				style={topPosts.length ? undefined : "--grid: minmax(0, 2fr) minmax(0, 1fr)"}
 			>
 				<div>
@@ -130,12 +128,13 @@ const leadParagraph = leadPost
 							<p class="lead-dek">{leadPost.data.dek || leadPost.data.excerpt}</p>
 						)}
 						<p class="meta">
-							{namesOf(leadPost) && <span>By {namesOf(leadPost)}</span>}
-							<span>{getReadingTime(leadPost.data.content)} min read</span>
+							{namesOf(leadPost) && <span>{ui.by(namesOf(leadPost)!)}</span>}
+							<span>{ui.minutesRead(getReadingTime(leadPost.data.content))}</span>
 						</p>
 						{leadParagraph && <p class="lead-body dropcap">{leadParagraph}</p>}
 						<a href={`/posts/${leadPost.id}`} class="continue">
-							Continue reading<span class="visually-hidden">: {leadPost.data.title}</span>
+							{ui.home.continue}
+							<span class="visually-hidden">: {leadPost.data.title}</span>
 						</a>
 					</article>
 
@@ -157,7 +156,7 @@ const leadParagraph = leadPost
 					)}
 
 					<div class="latest">
-						<h2 class="column-head">Latest</h2>
+						<h2 class="column-head">{ui.home.latest}</h2>
 						<ul class="stack">
 							{latestPosts.map((p) => (
 								<li>
@@ -171,7 +170,7 @@ const leadParagraph = leadPost
 							))}
 						</ul>
 						<a href="/posts" class="more-link">
-							All articles
+							{ui.home.all}
 						</a>
 					</div>
 				</div>
@@ -184,7 +183,7 @@ const leadParagraph = leadPost
 							<a href={s.url}>{s.label}</a>
 						</h2>
 						<a href={s.url} class="more">
-							More in {s.label}
+							{ui.moreIn(s.label)}
 						</a>
 					</header>
 					<div class="rule-grid" style={`--grid: repeat(${s.posts.length}, minmax(0, 1fr))`}>
@@ -213,7 +212,7 @@ const leadParagraph = leadPost
 							<a href={opinion.url}>{opinion.label}</a>
 						</h2>
 						<a href={opinion.url} class="more">
-							More in {opinion.label}
+							{ui.moreIn(opinion.label)}
 						</a>
 					</header>
 					<div class="rule-grid">

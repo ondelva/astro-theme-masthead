@@ -9,6 +9,12 @@ Admin UI → **Menus**: header links, footer links, social links. Read with `get
 
 Section rails on the home page come from the `category` taxonomy. If you install without sample content, create your sections in the admin UI first — the home page hides any section with no published terms, so an empty install shows no rails until you add them.
 
+## Words and language
+
+Every word the theme prints is in `src/utils/ui.ts`: the skip link, the header and footer labels, the archive pager, bylines and reading time, the article footer, search, the 404 page. The site's title and tagline stay in the admin.
+
+To publish in another language, set `locale` at the top of `ui.ts` (it sets `<html lang>`, the feeds' `<language>`, dates and name lists) and translate `ui`. Counts are functions, so plurals stay right. Strings marked HTML carry a link and are printed as markup: keep the tags when you translate them.
+
 ## Colors, rules, and type
 
 `src/styles/theme.css` overrides the tokens defined in `src/styles/tokens.css` (don't edit that file directly). The palette is one accent color on ink and paper — don't add a second accent or colored section backgrounds. Preview changes at `/styleguide` (dev only, 404s in production).

@@ -3,6 +3,8 @@
  * Change FOUNDED to your first issue date. Volume turns over every year; the issue
  * number counts every day since the first issue, the way daily papers number them.
  */
+import { locale } from "./ui";
+
 export const FOUNDED = "2026-01-05";
 
 const DAY = 86_400_000;
@@ -11,7 +13,7 @@ const DAY = 86_400_000;
 export function getEdition(now = new Date()) {
 	const days = Math.floor((now.getTime() - Date.parse(FOUNDED)) / DAY);
 	return {
-		date: now.toLocaleDateString("en-US", {
+		date: now.toLocaleDateString(locale, {
 			weekday: "long",
 			year: "numeric",
 			month: "long",

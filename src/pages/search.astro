@@ -3,6 +3,9 @@ export const prerender = false;
 
 import { search } from "emdash";
 import Base from "../layouts/Base.astro";
+import { ui } from "../utils/ui";
+
+const t = ui.search;
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
 
@@ -15,34 +18,22 @@ const hrefOf = (r: (typeof results)[number]) =>
 	`/${r.collection === "pages" ? "pages" : "posts"}/${r.slug ?? r.id}`;
 ---
 
-<Base
-	title={query ? `Search: ${query}` : "Search"}
-	description="Search the archive"
-	robots="noindex"
->
+<Base title={query ? t.titleFor(query) : t.title} description={t.description} robots="noindex">
 	<div class="search">
 		<header class="search-head">
-			<h1>Search</h1>
+			<h1>{t.title}</h1>
 			<form method="get" action="/search" role="search">
 				<label for="q" class="visually-hidden">
-					Search articles and pages
+					{t.label}
 				</label>
-				<input
-					id="q"
-					type="search"
-					name="q"
-					value={query}
-					placeholder="Seawall, ferry, Harbor Days"
-				/>
-				<button type="submit">Search</button>
+				<input id="q" type="search" name="q" value={query} placeholder={t.placeholder} />
+				<button type="submit">{t.button}</button>
 			</form>
 		</header>
 
 		{query && (
 			<p class="summary" role="status">
-				{results.length === 0
-					? `Nothing matched “${query}”. Try a shorter word or a street name.`
-					: `${results.length} result${results.length === 1 ? "" : "s"} for “${query}”`}
+				{results.length === 0 ? t.none(query) : t.results(results.length, query)}
 			</p>
 		)}
 
@@ -51,7 +42,7 @@ const hrefOf = (r: (typeof results)[number]) =>
 				{results.map((r) => (
 					<li>
 						<h2>
-							<a href={hrefOf(r)}>{r.title ?? "Untitled"}</a>
+							<a href={hrefOf(r)}>{r.title ?? ui.untitled}</a>
 						</h2>
 						{r.snippet && <p class="snippet" set:html={r.snippet} />}
 					</li>

@@ -2,6 +2,7 @@
 import type { MediaValue, ContentBylineCredit } from "emdash";
 import { Image } from "emdash/ui";
 import { bylineNames, formatDate } from "../utils/format";
+import { ui } from "../utils/ui";
 
 interface Props {
 	title: string;
@@ -58,9 +59,9 @@ const names = bylineNames(bylines);
 	{!compact && excerpt && <p class="card-excerpt">{excerpt}</p>}
 	{((!compact && (names || readingTime)) || date) && (
 		<p class="card-meta">
-			{!compact && names && <span>By {names}</span>}
+			{!compact && names && <span>{ui.by(names)}</span>}
 			{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}
-			{!compact && readingTime && <span>{readingTime} min read</span>}
+			{!compact && readingTime && <span>{ui.minutesRead(readingTime)}</span>}
 		</p>
 	)}
 	{!compact && tags.length > 0 && (

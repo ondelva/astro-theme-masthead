@@ -56,7 +56,7 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 
 ## This Theme
 
-A newspaper-style news magazine for editorial teams: many authors, sections, and desks. English by default.
+A newspaper-style news magazine for editorial teams: many authors, sections, and desks. English by default; every printed word is in `src/utils/ui.ts`.
 
 The print page is translated for the web, not copied. Scanning density lives on the home page and archives: a column grid split by thin vertical rules. Articles drop the grid and become a single readable column. The rule system is the signature; it repeats on every screen. The full-width nameplate appears large only on the home page and shrinks into a sticky header elsewhere.
 
@@ -66,6 +66,7 @@ The print page is translated for the web, not copied. Scanning density lives on 
 | ----------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Site title, tagline, logo, favicon              | Admin UI → Settings             | Read with `getSiteSettings()`. Not hardcoded                                                            |
 | Navigation                                      | Admin UI → Menus                | Read with `getMenu()`                                                                                   |
+| Every word the theme prints, the locale         | `src/utils/ui.ts`               | Title and tagline stay in Settings                                                                      |
 | Collections, fields, taxonomies, sample content | `seed/seed.json`                | Applied once at setup. See the schema rules below                                                       |
 | Colors, rules, spacing, type scale              | `src/styles/theme.css`          | Override tokens from `src/styles/tokens.css`; don't edit that file. Preview at `/styleguide` (dev only) |
 | Webfonts                                        | `fonts:` in `astro.config.mjs`  | Bound to `--font-*` CSS variables                                                                       |
