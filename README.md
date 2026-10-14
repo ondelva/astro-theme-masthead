@@ -40,7 +40,7 @@ See [docs/customization.md](docs/customization.md).
 ## Requirements
 
 - Node.js 22.12 or later, pnpm 9 or newer (`packageManager` pins the exact version; pnpm 10+ switches to it)
-- Cloudflare **Workers Paid** plan (the bundle is over the 3 MiB free-plan limit)
+- Cloudflare **Workers Paid** plan. The bundle is over the 3 MiB free-plan limit, and the per-minute Cron Trigger (scheduled publishing, cleanup) uses about 20 ms of CPU, over the free plan's 10 ms: on the free plan it fails every other run and scheduled posts go out late
 - Tested with emdash 0.38.x. Dependencies are pinned to exact versions; EmDash is in beta and ships weekly.
 
 ## Local development
