@@ -2,7 +2,7 @@
 
 A newspaper-style news theme for [EmDash](https://github.com/emdash-cms/emdash), the CMS built on Astro. Made for editorial teams: many authors, sections, and desks. Rules and hierarchy do the work, not decoration.
 
-[Live demo](https://masthead-free.ondelva.com) · [Admin demo](https://masthead-free.ondelva.com/demo) · [Docs](docs/customization.md) · [Pro demo](https://masthead.ondelva.com) · [Get Pro](https://buy.polar.sh/polar_cl_5QWr1VFC0mYPuUIObySlgyfGa3MYodyZaI3AU0xmwI4)
+[Live demo](https://masthead-free.ondelva.com) · [Admin demo](https://masthead-free.ondelva.com/demo) · [Docs](docs/customization.md) · [Pro demo](https://masthead.ondelva.com) · [Get Pro](https://buy.polar.sh/polar_cl_5QWr1VFC0mYPuUIObySlgyfGa3MYodyZaI3AU0xmwI4?utm_source=github)
 
 ![screenshot](docs/screenshots/home-light.png)
 
@@ -82,7 +82,7 @@ This is the free, MIT-licensed edition. Masthead Pro is built on the same code a
 | Footer credit | One line, easy to remove                               | None                                                   |
 | Support       | GitHub Issues                                          | Email (im@ondelva.com), 2 business days                |
 
-[See the Pro demo →](https://masthead.ondelva.com) · [Get Pro →](https://buy.polar.sh/polar_cl_5QWr1VFC0mYPuUIObySlgyfGa3MYodyZaI3AU0xmwI4)
+[See the Pro demo →](https://masthead.ondelva.com) · [Get Pro →](https://buy.polar.sh/polar_cl_5QWr1VFC0mYPuUIObySlgyfGa3MYodyZaI3AU0xmwI4?utm_source=github)
 
 ## License
 
